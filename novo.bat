@@ -1,10 +1,12 @@
 @ECHO off
 CLS
 TITLE BEM VINDO
-color b
+COLOR b
 
 
- 
+REM VERSÃO 1.2.0
+
+
 ECHO  				 ==================================
 ECHO 				*          BEM VINDO               * 
 ECHO  				 ==================================              
@@ -13,7 +15,7 @@ CLS
 REM Criando Pagina Principal 
 :menu
 CLS
-color b
+COLOR b
 
 
 REM Acessando Dados do Computador
@@ -42,7 +44,7 @@ ECHO * 11. Sair                         *
 ECHO  ==================================
 
 REM Estrutura de Afirmações Para Menu
-set /p opcao= Escolha uma opcao: 
+SET /p opcao= Escolha uma opcao: 
 ECHO ------------------------------
 IF %opcao% EQU 1 GOTO opcao1
 IF %opcao% EQU 2 GOTO opcao2
@@ -54,16 +56,26 @@ IF %opcao% EQU 7 GOTO opcao7
 IF %opcao% EQU 8 GOTO opcao8
 IF %opcao% EQU 9 GOTO opcao9
 IF %opcao% EQU 10 GOTO opcao10
-IF %opcao% EQU 11 GOTO opcao10
+IF %opcao% EQU 20 GOTO opcao20
+IF %opcao% EQU 30 GOTO opcao30
+
+
+
+REM SAIR
+IF %opcao% EQU 50 GOTO opcao50
+
+
+
+REM Se menor que 1 ou igual maior que X : Opção inválida
 IF %opcao% LSS 1 GOTO opcao100
-IF %opcao% GEQ 12 GOTO opcao100
+REM IF %opcao% GEQ 12 GOTO opcao100
 
 
 
 :opcao1
 CLS
 REM Copia Arquivos da Pasta 'Documentos' Para o Desktop; Insira Seu Endereço de Escolha
-xcopy /T /C  %userprofile%\Documents\*.*  %userprofile%\Desktop
+XCOPY /T /C  %userprofile%\Documents\*.*  %userprofile%\Desktop
 ECHO ==================================
 ECHO *      Backup Concluido           *
 ECHO ==================================
@@ -87,7 +99,7 @@ GOTO menu
 :opcao3
 CLS
 REM Apaga Todos os Arquivos da Lixeira
-rd /S /Q c:\$Recycle.bin
+RD /S /Q c:\$Recycle.bin
 ECHO  ==================================
 ECHO *      Lixeira Esvaziada           *
 ECHO  ==================================
@@ -115,7 +127,7 @@ GOTO menu
 
 :opcao6
 CLS
-color c
+COLOR c
 ECHO  ==================================
 ECHO *        SUA PLACA MAE            	*
 ECHO  ==================================
@@ -129,31 +141,31 @@ GOTO menu
 
 :opcao7
 CLS
-start calc.exe
+START calc.exe
 PAUSE
 GOTO menu
 
 :opcao8
 CLS
-start control.exe
+START control.exe
 PAUSE
 GOTO menu
 
 :opcao9
 CLS
-start taskmgr.exe
+START taskmgr.exe
 PAUSE
 GOTO menu
 
 :opcao10
 CLS
-color 2
+COLOR 2
 REM Estrutura de Afirmação para Checar a Escolha do Usuario
 ECHO  ------------------------------
 ECHO *  1. = Yes                    *
 ECHO *  0. = No                     *
 ECHO  ------------------------------
-set /p rein= Tem Certeza ?:
+SET /p rein= Tem Certeza ?:
 IF %rein% EQU 1 GOTO op1
 IF %rein% GTR 1 GOTO op3
 IF %rein% EQU 0 GOTO op2
@@ -170,10 +182,11 @@ IF %rein% LSS 0 GOTO op3
 	PAUSE
 	GOTO opcao8
 
-:opcao11
+
+
+:opcao50
 CLS
 exit
-
 
 :opcao100
 ECHO  =======================================
@@ -182,6 +195,33 @@ ECHO  =======================================
 PAUSE
 GOTO menu
 
+:opcao20
+CLS
+ECHO  =======================================
+ECHO + SERAO ENVIADOS 10 PACOTES DE 32 BYTES  +
+ECHO + EM 2 ENDERECOS AVULSOS (GOOGLE/YOUTUBE)+
+ECHO  =======================================
+PING www.google.com -n 10
+PAUSE
+PING www.youtube.com -n 10
+PAUSE
+ECHO  =======================================
+ECHO + VERIFIQUE TAXA DE ENVIADOS ~ RECEBIDOS +
+ECHO + SE VARIAR POUCO: CONEXAO ESTAVEL       +
+ECHO + SE VARIAR MUITO: ALGO ERRADO           +
+ECHO  =======================================
+PAUSE
+GOTO menu
+
+:opcao30
+CLS 
+NET USE z:servidor\compartilhamento
+z:
+dir
+PAUSE
+GOTO menu
 
 
-TREE
+TREE /?
+DIR /?
+NETSTAT /?
