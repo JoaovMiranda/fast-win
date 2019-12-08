@@ -1,11 +1,23 @@
+:: Nome   : Menu.bat
+:: Motivo : Agilizar pequenas ações diárias.
+:: Autor  : github.com/joaovMiranda
+:: VERSÃO : 1.4.0
+
+
 @ECHO off
 CLS
-TITLE BEM VINDO
+TITLE CONTROLE DE ACESSO
 COLOR b
 
 
-REM VERSÃO 1.4.0
+rem :control
+rem echo enter password to activate programme
+rem set/p "pass=>"
+rem if NOT %pass%== 123 goto fail
 
+:wellcome
+CLS
+TITLE BEM VINDO
 ECHO  				 ==================================
 ECHO 				*            BEM VINDO             *
 ECHO 				*                                  * 
@@ -23,18 +35,15 @@ ECHO 				*       MADE BY: Joao Miranda      *
 ECHO 				*      github.com/joaovMiranda     * 
 ECHO 				*                                  * 
 ECHO  				 ==================================
-
-
 PAUSE
-CLS
+
 REM Criando Pagina Principal 
 :menu
 CLS
+TITLE FACILITADOR DE COMANDOS
 COLOR b
 
-
 REM Acessando Dados do Computador
-TITLE FACILITADOR DE COMANDOS
 ECHO COMPUTADOR: %computername% 
 ECHO USUARIO: %username% 
 ECHO DATA: %date%
@@ -45,15 +54,15 @@ ECHO .
 
 ECHO      ----- MENU TAREFAS -----
 ECHO  ==================================
-ECHO * 1. Fazer Backup dos Documentos   * 
-ECHO * 2. Limpar Area de Trabalho       *
-ECHO * 3. Escanear Disco Local          *
-ECHO * 4. Informacoes da Maquina        *
-ECHO * 5. Abrir Calculadora             *
-ECHO * 6. Abrir Painel de Controle      *
-ECHO * 7. Abrir Ger. Tarefas            *
-ECHO * 8. Teste de TCP                  *
-ECHO * 9. ???????????????????           *
+ECHO * 1.  Fazer Backup dos Documentos  * 
+ECHO * 2.  Limpar Area de Trabalho      *
+ECHO * 3.  Escanear Disco Local         *
+ECHO * 4.  Informacoes da Maquina       *
+ECHO * 5.  Abrir Calculadora            *
+ECHO * 6.  Abrir Painel de Controle     *
+ECHO * 7.  Abrir Ger. Tarefas           *
+ECHO * 8.  Desinstalar Programas        *
+ECHO * 9.  Teste de TCP                 *
 ECHO * 10. Esvaziar a Lixeira           *
 ECHO * 11. Desfragmentar o Disco        *
 ECHO * 12. Limpar Fila de Impressao     *
@@ -61,8 +70,12 @@ ECHO * 13. Limpar Arquivos Temporarios  *
 ECHO * 14. Limpeza Interna              *
 ECHO * 15. Reiniciar o Computador       *
 ECHO * 16. Desligar o Computador        *
-ECHO * 50. Sair                         *
 ECHO  ==================================
+ECHO * 65. Voltar ao Guia              *
+ECHO * 50. Sair                        *
+ECHO  ==================================
+
+
 
 REM Estrutura de Afirmações Para Menu
 SET /p opcao= Escolha uma opcao: 
@@ -84,8 +97,12 @@ IF %opcao% EQU 14 GOTO opcao14
 IF %opcao% EQU 15 GOTO opcao15
 IF %opcao% EQU 16 GOTO opcao16
 
-REM SAIR
+IF %opcao% EQU 65 GOTO wellcome
+IF %opcao% EQU 75 GOTO github
+
+REM Sair do programa
 IF %opcao% EQU 50 GOTO opcao50
+
 REM Se menor que 1 ou igual maior que X : Opção inválida
 IF %opcao% LSS 1 GOTO opcao100
 IF %opcao% GEQ 17 GOTO opcao100
@@ -100,7 +117,7 @@ ECHO  				*      Operacao em Andamento      *
 ECHO  				 ==================================
 XCOPY /T /E /-Y /C  %userprofile%\Documents\*.*  C:\BackupDocuments
 ECHO  				 ==================================
-ECHO  				*      Backup Concluido           *
+ECHO  				*         Backup Concluido         *
 ECHO  				 ==================================
 PAUSE
 GOTO menu
@@ -111,7 +128,7 @@ REM MOVE Todos os Arquivos do Desktop Para Uma Pasta de Backup
 CLS
 TITLE BACK UP - Desktop
 ECHO 				 ==================================
-ECHO  				*      Operacao em Andamento       *
+ECHO  				*       Operacao em Andamento      *
 ECHO  				 ==================================
 CD C:\
 IF EXIST C:\BackupDesktop (
@@ -122,7 +139,7 @@ IF EXIST C:\BackupDesktop (
 	CD %userprofile%\Desktop
 	MOVE /-Y * C:\BackupDesktop
 ECHO   				 ==================================
-ECHO  				*       Limpeza Concluida          *
+ECHO  				*         Limpeza Concluida        *
 ECHO   				 ==================================
 PAUSE
 GOTO menu
@@ -133,7 +150,7 @@ REM CHECKDISK
 CLS
 TITLE ESCANEANDO ...
 ECHO  				 ==================================
-ECHO  				*     Escaneamento de Disco        *
+ECHO  				*       Escaneamento de Disco       *
 ECHO   				 ==================================
 chkdsk c:
 PAUSE
@@ -146,11 +163,11 @@ CLS
 TITLE INFORMACOES
 COLOR c
 ECHO 				 ==================================
-ECHO 				*        SUA PLACA MAE             *
+ECHO 				*           SUA PLACA MAE          *
 ECHO 				 ==================================
 wmic baseboard get product, manufacturer, version, serialnumber
 ECHO   				 ==================================
-ECHO  				*    INFORMACOES DO SISTEMA        *
+ECHO  				*      INFORMACOES DO SISTEMA      *
 ECHO  				 ==================================
 systeminfo
 systeminfo > c:\INFO.txt
@@ -178,9 +195,14 @@ CLS
 START taskmgr.exe
 GOTO menu
 
+:opcao8
+CLS
+START appwiz.cpl
+GOTO menu
+
 
 REM Teste de instabilidade 
-:opcao8
+:opcao9
 CLS
 TITLE TESTANDO ...
 ECHO  =======================================
@@ -196,12 +218,6 @@ ECHO + VERIFIQUE TAXA DE ENVIADOS ~ RECEBIDOS +
 ECHO + SE VARIAR POUCO: CONEXAO ESTAVEL       +
 ECHO + SE VARIAR MUITO: ALGO ERRADO           +
 ECHO  =======================================
-PAUSE
-GOTO menu
-
-
-:opcao9
-CLS
 PAUSE
 GOTO menu
 
@@ -340,8 +356,16 @@ ECHO  ======================================
 PAUSE
 GOTO menu
 
+:fail
+ECHO Senha incorreta, tente novamente.
+PAUSE
+GOTO control
 
 
+:github
+START https://github.com/joaovMiranda
+CLS
+GOTO menu
 
 
 
