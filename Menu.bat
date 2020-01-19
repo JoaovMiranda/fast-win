@@ -44,36 +44,37 @@ TITLE FACILITADOR DE COMANDOS
 COLOR b
 
 REM Acessando Dados do Computador
-ECHO COMPUTADOR: %computername% 
-ECHO USUARIO: %username% 
-ECHO DATA: %date%
-ECHO .                                                                   
-ECHO .                                                                   
-ECHO .                                                                   
-ECHO .                                                                   
 
-ECHO      ----- MENU TAREFAS -----
-ECHO  ==================================
-ECHO * 1.  Fazer Backup dos Documentos  * 
-ECHO * 2.  Limpar Area de Trabalho      *
-ECHO * 3.  Escanear Disco Local         *
-ECHO * 4.  Informacoes da Maquina       *
-ECHO * 5.  Abrir Calculadora            *
-ECHO * 6.  Abrir Painel de Controle     *
-ECHO * 7.  Abrir Ger. Tarefas           *
-ECHO * 8.  Desinstalar Programas        *
-ECHO * 9.  Teste de TCP                 *
-ECHO * 10. Esvaziar a Lixeira           *
-ECHO * 11. Desfragmentar o Disco        *
-ECHO * 12. Limpar Fila de Impressao     *
-ECHO * 13. Limpar Arquivos Temporarios  *
-ECHO * 14. Limpeza Interna              *
-ECHO * 15. Reiniciar o Computador       *
-ECHO * 16. Desligar o Computador        *
-ECHO  ==================================
-ECHO * 65. Voltar ao Guia              *
-ECHO * 50. Sair                        *
-ECHO  ==================================
+::MODE 40,35
+
+ECHO    COMPUTADOR: %computername% 
+ECHO    USUARIO: %username% 
+ECHO    DATA: %date%
+ECHO    (c) 2019 Microsoft Corporation. Todos os direitos reservados.                                                                   
+                                                              
+                                                                                                                                    
+ECHO          ----- MENU TAREFAS -----
+ECHO     ==================================
+ECHO    * 1.  Fazer Backup dos Documentos  * 
+ECHO    * 2.  Limpar Area de Trabalho      *
+ECHO    * 3.  Escanear Disco Local         *
+ECHO    * 4.  Informacoes da Maquina       *
+ECHO    * 5.  Abrir Calculadora            *
+ECHO    * 6.  Abrir Painel de Controle     *
+ECHO    * 7.  Abrir Ger. Tarefas           *
+ECHO    * 8.  Desinstalar Programas        *
+ECHO    * 9.  Teste de TCP                 *
+ECHO    * 10. Esvaziar a Lixeira           *
+ECHO    * 11. Desfragmentar o Disco        *
+ECHO    * 12. Limpar Fila de Impressao     *
+ECHO    * 13. Limpar Arquivos Temporarios  *
+ECHO    * 14. Limpeza Interna              *
+ECHO    * 15. Reiniciar o Computador       *
+ECHO    * 16. Desligar o Computador        *
+ECHO     ==================================
+ECHO    * 65. Voltar ao Guia               *
+ECHO    * 50. Sair                         *
+ECHO     ==================================
 
 
 
@@ -106,6 +107,8 @@ IF %opcao% EQU 50 GOTO opcao50
 REM Se menor que 1 ou igual maior que X : Opção inválida
 IF %opcao% LSS 1 GOTO opcao100
 IF %opcao% GEQ 17 GOTO opcao100
+
+ECHO copyright
 
 
 REM Copia Arquivos da Pasta 'Documentos' Para Uma Pasta de Backup; Insira Seu Endereço de Escolha
