@@ -1,7 +1,7 @@
 :: Nome   : Menu.bat
 :: Motivo : Agilizar pequenas ações diárias.
 :: Autor  : github.com/joaovMiranda
-:: VERSÃO : 1.4.0
+:: VERSÃO : 1.4.1
 
 
 @ECHO off
