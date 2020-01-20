@@ -47,9 +47,10 @@ REM Acessando Dados do Computador
 
 ::MODE 40,35
 
-ECHO    COMPUTADOR: %computername% 
 ECHO    USUARIO: %username% 
-ECHO    DATA: %date%
+ECHO    COMPUTADOR: %computername% 
+ECHO    DATA: %date%   %time%
+
 ECHO    (c) 2019 Microsoft Corporation. Todos os direitos reservados.                                                                   
                                                               
                                                                                                                                     
@@ -100,6 +101,9 @@ IF %opcao% EQU 16 GOTO opcao16
 
 IF %opcao% EQU 65 GOTO wellcome
 IF %opcao% EQU 75 GOTO github
+IF %opcao% EQU 70 GOTO opcao70
+IF %opcao% EQU 85 GOTO opcao85
+
 
 REM Sair do programa
 IF %opcao% EQU 50 GOTO opcao50
@@ -109,6 +113,24 @@ IF %opcao% LSS 1 GOTO opcao100
 IF %opcao% GEQ 17 GOTO opcao100
 
 ECHO copyright
+
+REM  Melhorando sua internet
+:opcao70
+CLS
+ipconfig /flushdns
+ECHO  =======================================
+netsh winsock reset
+ECHO  =======================================
+nbtstat -R
+ECHO  =======================================
+PAUSE
+GOTO menu
+
+:opcao85
+CLS
+SFC SCANNOW
+PAUSE
+GOTO menu
 
 
 REM Copia Arquivos da Pasta 'Documentos' Para Uma Pasta de Backup; Insira Seu Endereço de Escolha
@@ -296,8 +318,29 @@ PAUSE
 GOTO menu
 
 
+REM Apagando arquivos desnecessarios
 :opcao14
 CLS
+DEL C:\Windows\System32\CLINT.*.*  /q
+DEL C:\Windows\System32\LOAD.*.*   /q
+DEL C:\Windows\System32\GIF.*.* /q
+DEL c:\windows\spool\printers   /q
+DEL /s C:\windows\temp\*.* /q 
+DEL /F /S /Q C:\WINDOWS\Temp\*.*
+DEL "%WINDIR%\Temp\*.*" /F /S /Q
+RD /S /Q "%HOMEPATH%\Config~1\Temp"
+MD "%HOMEPATH%\Config~1\Temp"
+RD /S /Q C:\WINDOWS\Temp\
+MD C:\WINDOWS\Temp
+DEL /F /S /Q %HOMEPATH%\Config~1\Temp\*.*
+DEL %temp% /q
+RD /S /Q C:\RECYCLER\ 
+DEL /s   C:\windows\system32\dllcache   /q
+DEL /s   C:\MSOCache\*.*   /q
+SC stop DiagTrack
+SC stop dmwappushservice
+SC Delete DiagTrack
+SC Delete dmwappushservice
 PAUSE
 GOTO menu
 
@@ -374,16 +417,21 @@ GOTO menu
 
 
 
-(A SER ADCIONADOS)
-:opcao30
-CLS 
-NET USE z:servidor\compartilhamento
-z:
-dir
-PAUSE
-GOTO menu
+::(A SER ADCIONADOS)
+:::opcao30
+::CLS 
+::NET USE z:servidor\compartilhamento
+::z:
+::dir
+::P::AUSE
+::GOTO menu
+::TASKKILL /F /IM wscript.exe
 
+::echo msgbox "EVITE ABRIR QUALQUER PROGRAMA DURANTE A OPERACAO!",vbinformation,"INICIANDO" >%temp%\mensagem1.vbs
+::start %temp%\mensagem1.vbs
 
-TREE /?
-DIR /?
-NETSTAT /?
+ ::RunDll32.exe Inetcpl.cpl, ClearMyTracksByProcess 16
+
+::TREE /?
+::D::IR /?
+::NETSTAT /?
