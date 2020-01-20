@@ -116,25 +116,6 @@ IF %opcao% GEQ 17 GOTO opcao100
 ECHO copyright
 
 
-:opcao85
-CLS
-SFC /scannow
-PAUSE
-GOTO menu
-
-
-REM CHECKDISK 
-:opcao3
-CLS
-TITLE ESCANEANDO ...
-ECHO  				 ==================================
-ECHO  				*       Escaneamento de Disco       *
-ECHO   				 ==================================
-chkdsk c:
-PAUSE
-GOTO menu
-
-
 REM Informações sobre a máquina
 :opcao4
 CLS
@@ -152,103 +133,6 @@ systeminfo > c:\INFO.txt
 ECHO   				 ==================================
 ECHO   				 Arquivo INFO.txt gerado no disco C:
 ECHO   				 ==================================
-PAUSE
-GOTO menu
-
-REM Apaga Todos os Arquivos da Lixeira
-:opcao10
-CLS
-TITLE LIMPANDO ...
-RD /S /Q c:\$Recycle.bin
-ECHO  ==================================
-ECHO *      Lixeira Esvaziada           *
-ECHO  ==================================
-PAUSE
-GOTO menu
-
-
-REM Desfragmantar o disco 
-:opcao11
-CLS
-TITLE OTIMIZANDO ...
-ECHO  ==================================
-ECHO *     Desfragmentar Disco via:     *
-ECHO *                                  *
-ECHO *       1. Prompt                  *
-ECHO *       0. Exec. nativo            *
-ECHO  ==================================
-SET /p dfrag= Digite :
-IF %dfrag% EQU 1 GOTO oppp1
-IF %dfrag% GTR 1 GOTO oppp3
-IF %dfrag% EQU 0 GOTO oppp2
-IF %dfrag% LSS 0 GOTO oppp3
-	:oppp1
-	DEFRAG C: /U /V
-	:oppp2
-	START dfrgui.exe
-	GOTO menu
-	:oppp3
-	ECHO  ============================================
-	ECHO * Opcao Invalida! Escolha outra opcao. (1/0) *
-	ECHO  ============================================
-	PAUSE
- 
-PAUSE
-GOTO menu 
-
-:opcao12
-CLS
-NET STOP spooler
-c:
-CD %systemroot%\system32\spool\printers
-DEL /f/s *.shd
-DEL /f/s *.spl
-NET START spooler
-ECHO  =======================================
-ECHO +          Processo Finalizado          +
-ECHO  =======================================
-PAUSE
-GOTO menu
-
-
-:opcao13
-IF EXIST c:\windows\temp\ (
-forfiles /p C:\Windows\Temp /s /m *.* /D -7 /C “cmd /c del /Q @path”
-)
-IF EXIST C:\Users\ (
-for /D %%x in (“C:\Users\*”) do (
-forfiles /p %%x\AppData\Local\Temp /s /m *.* /D -7 /C “cmd /c del /Q @path”
-forfiles /p %%x\AppData\Local\Microsoft\Windows\Temporary Internet Files /s /m *.* /D -7 /C “cmd /c del /Q @path”
-forfiles /p %%x\AppData\Local\Microsoft\Windows\WER\ReportQueue /s /m *.* /C “cmd /c del /Q @path”
-)
-)
-PAUSE
-GOTO menu
-
-
-REM Apagando arquivos desnecessarios
-:opcao14
-CLS
-DEL C:\Windows\System32\CLINT.*.*  /q
-DEL C:\Windows\System32\LOAD.*.*   /q
-DEL C:\Windows\System32\GIF.*.* /q
-DEL c:\windows\spool\printers   /q
-DEL /s C:\windows\temp\*.* /q 
-DEL /F /S /Q C:\WINDOWS\Temp\*.*
-DEL "%WINDIR%\Temp\*.*" /F /S /Q
-RD /S /Q "%HOMEPATH%\Config~1\Temp"
-MD "%HOMEPATH%\Config~1\Temp"
-RD /S /Q C:\WINDOWS\Temp\
-MD C:\WINDOWS\Temp
-DEL /F /S /Q %HOMEPATH%\Config~1\Temp\*.*
-DEL %temp% /q
-RD /S /Q C:\RECYCLER\ 
-DEL /s   C:\windows\system32\dllcache   /q
-DEL /s   C:\MSOCache\*.*   /q
-SC stop DiagTrack
-SC stop dmwappushservice
-SC Delete DiagTrack
-SC Delete dmwappushservice
 PAUSE
 GOTO menu
 
@@ -275,10 +159,127 @@ GOTO menu
 	CLS
 	GOTO menu
 
+
+:LIMPEZA
+	CLS
+	REM Apaga Todos os Arquivos da Lixeira
+	:opcao10
+	CLS
+	TITLE LIMPANDO ...
+	RD /S /Q c:\$Recycle.bin
+	ECHO  ==================================
+	ECHO *      Lixeira Esvaziada           *
+	ECHO  ==================================
+	PAUSE
+	GOTO menu
+	REM Apagando arquivos desnecessarios
+	:opcao14
+	CLS
+	DEL C:\Windows\System32\CLINT.*.*  /q
+	DEL C:\Windows\System32\LOAD.*.*   /q
+	DEL C:\Windows\System32\GIF.*.* /q
+	DEL c:\windows\spool\printers   /q
+	DEL /s C:\windows\temp\*.* /q 
+	DEL /F /S /Q C:\WINDOWS\Temp\*.*
+	DEL "%WINDIR%\Temp\*.*" /F /S /Q
+	RD /S /Q "%HOMEPATH%\Config~1\Temp"
+	MD "%HOMEPATH%\Config~1\Temp"
+	RD /S /Q C:\WINDOWS\Temp\
+	MD C:\WINDOWS\Temp
+	DEL /F /S /Q %HOMEPATH%\Config~1\Temp\*.*
+	DEL %temp% /q
+	RD /S /Q C:\RECYCLER\ 
+	DEL /s   C:\windows\system32\dllcache   /q
+	DEL /s   C:\MSOCache\*.*   /q
+	SC stop DiagTrack
+	SC stop dmwappushservice
+	SC Delete DiagTrack
+	SC Delete dmwappushservice
+	PAUSE
+	GOTO menu
+	REM Limpar Arquivos Temporarios
+	:opcao13
+	IF EXIST c:\windows\temp\ (
+	forfiles /p C:\Windows\Temp /s /m *.* /D -7 /C “cmd /c del /Q @path”
+	)
+	IF EXIST C:\Users\ (
+	for /D %%x in (“C:\Users\*”) do (
+	forfiles /p %%x\AppData\Local\Temp /s /m *.* /D -7 /C “cmd /c del /Q @path”
+	forfiles /p %%x\AppData\Local\Microsoft\Windows\Temporary Internet Files /s /m *.* /D -7 /C “cmd /c del /Q @path”
+	forfiles /p %%x\AppData\Local\Microsoft\Windows\WER\ReportQueue /s /m *.* /C “cmd /c del /Q @path”
+	)
+	)
+	PAUSE
+	GOTO menu
+	:opcao12
+	REM Limpar fila de impressão 
+	CLS
+	NET STOP spooler
+	c:
+	CD %systemroot%\system32\spool\printers
+	DEL /f/s *.shd
+	DEL /f/s *.spl
+	NET START spooler
+	ECHO  =======================================
+	ECHO +          Processo Finalizado          +
+	ECHO  =======================================
+	PAUSE
+	GOTO menu
+
+:DISCO
+	REM Desfragmantar o disco 
+	:opcao11
+	CLS
+	TITLE OTIMIZANDO ...
+	ECHO  ==================================
+	ECHO *     Desfragmentar Disco via:     *
+	ECHO *                                  *
+	ECHO *       1. Prompt                  *
+	ECHO *       0. Exec. nativo            *
+	ECHO  ==================================
+	SET /p dfrag= Digite :
+	IF %dfrag% EQU 1 GOTO oppp1
+	IF %dfrag% GTR 1 GOTO oppp3
+	IF %dfrag% EQU 0 GOTO oppp2
+	IF %dfrag% LSS 0 GOTO oppp3
+		:oppp1
+		DEFRAG C: /U /V
+		:oppp2
+		START dfrgui.exe
+		GOTO menu
+		:oppp3
+		ECHO  ============================================
+		ECHO * Opcao Invalida! Escolha outra opcao. (1/0) *
+		ECHO  ============================================
+		PAUSE
+	
+	PAUSE
+	GOTO menu 
+
+	:opcao85
+	CLS
+	SFC /scannow
+	PAUSE
+	GOTO menu
+
+
+	REM CHECKDISK 
+	:opcao3
+	CLS
+	TITLE ESCANEANDO ...
+	ECHO  				 ==================================
+	ECHO  				*       Escaneamento de Disco       *
+	ECHO   				 ==================================
+	chkdsk c:
+	PAUSE
+	GOTO menu
+
+::TUDO OK DAQUI PRA BAIXO
+
 :BACKUP
 	CLS
-	REM Iniciar executáveis 
-	TITLE EXECUTAVEIS
+	REM Tipos de BackUP
+	TITLE BACK UP
 	ECHO  ------------------------------
 	ECHO    * 1.  Fazer Backup dos Documentos  * 
 	ECHO    * 2.  Limpar Area de Trabalho      *
@@ -453,53 +454,53 @@ GOTO menu
 		GOTO REDE
 
 :REINICIAR
-CLS
-COLOR 2
-REM Estrutura de Afirmação para Checar a Escolha do Usuario
-TITLE REINICIAR
-ECHO  ------------------------------
-ECHO *  1. = Yes                    *
-ECHO *  0. = No                     *
-ECHO  ------------------------------
-SET /p rein= Tem Certeza ?:
-IF %rein% EQU 1 GOTO op1
-IF %rein% GTR 1 GOTO op3
-IF %rein% EQU 0 GOTO op2
-IF %rein% LSS 0 GOTO op3
-	:op1
-	shutdown -r -c "O Seu Computador Sera Reiniciado" -t "5"
-	:op2
-	GOTO menu
-	:op3
-	ECHO 	=======================================
-	ECHO * Opcao Invalida! Escolha outra opcao. (1/0) *
-	ECHO 	=======================================
-	PAUSE
-	GOTO opcao15
-
-:DESLIGAR
-CLS
-COLOR 2
-TITLE DESLIGAR
-ECHO  ------------------------------
-ECHO *  1. = Yes                    *
-ECHO *  0. = No                     *
-ECHO  ------------------------------
-SET /p shut= Tem Certeza ?:
-IF %shut% EQU 1 GOTO opp1
-IF %shut% GTR 1 GOTO opp3
-IF %shut% EQU 0 GOTO opp2
-IF %shut% LSS 0 GOTO opp3
-	:opp1
-		shutdown -r -c "O Seu Computador Sera Desligado" -p
-	:opp2
+	CLS
+	COLOR 2
+	REM Estrutura de Afirmação para Checar a Escolha do Usuario
+	TITLE REINICIAR
+	ECHO  ------------------------------
+	ECHO *  1. = Yes                    *
+	ECHO *  0. = No                     *
+	ECHO  ------------------------------
+	SET /p rein= Tem Certeza ?:
+	IF %rein% EQU 1 GOTO op1
+	IF %rein% GTR 1 GOTO op3
+	IF %rein% EQU 0 GOTO op2
+	IF %rein% LSS 0 GOTO op3
+		:op1
+		shutdown -r -c "O Seu Computador Sera Reiniciado" -t "5"
+		:op2
 		GOTO menu
-	:opp3
+		:op3
 		ECHO 	=======================================
 		ECHO * Opcao Invalida! Escolha outra opcao. (1/0) *
 		ECHO 	=======================================
 		PAUSE
-		GOTO opcao16
+		GOTO opcao15
+
+:DESLIGAR
+	CLS
+	COLOR 2
+	TITLE DESLIGAR
+	ECHO  ------------------------------
+	ECHO *  1. = Yes                    *
+	ECHO *  0. = No                     *
+	ECHO  ------------------------------
+	SET /p shut= Tem Certeza ?:
+	IF %shut% EQU 1 GOTO opp1
+	IF %shut% GTR 1 GOTO opp3
+	IF %shut% EQU 0 GOTO opp2
+	IF %shut% LSS 0 GOTO opp3
+		:opp1
+			shutdown -r -c "O Seu Computador Sera Desligado" -p
+		:opp2
+			GOTO menu
+		:opp3
+			ECHO 	=======================================
+			ECHO * Opcao Invalida! Escolha outra opcao. (1/0) *
+			ECHO 	=======================================
+			PAUSE
+			GOTO opcao16
 
 
 
