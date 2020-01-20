@@ -42,7 +42,6 @@ REM Criando Pagina Principal
 CLS
 TITLE FACILITADOR DE COMANDOS
 COLOR b
-
 REM Acessando Dados do Computador
 
 ::MODE 40,35
@@ -56,22 +55,21 @@ ECHO    (c) 2019 Microsoft Corporation. Todos os direitos reservados.
                                                                                                                                     
 ECHO          ----- MENU TAREFAS -----
 ECHO     ==================================
-ECHO    * 1.  Fazer Backup dos Documentos  * 
-ECHO    * 2.  Limpar Area de Trabalho      *
 ECHO    * 3.  Escanear Disco Local         *
 ECHO    * 4.  Informacoes da Maquina       *
-ECHO    * 5.  Abrir Calculadora            *
-ECHO    * 6.  Abrir Painel de Controle     *
-ECHO    * 7.  Abrir Ger. Tarefas           *
-ECHO    * 8.  Desinstalar Programas        *
-ECHO    * 9.  Teste de TCP                 *
+
+ECHO    * .  BACKUP                        * 
+ECHO    * .  EXECUTAVEIS                   *
+ECHO    * .  REDE                          *
+ECHO    * .  Reiniciar o Computador        *
+ECHO    * .  Desligar o Computador         *
+
 ECHO    * 10. Esvaziar a Lixeira           *
 ECHO    * 11. Desfragmentar o Disco        *
 ECHO    * 12. Limpar Fila de Impressao     *
 ECHO    * 13. Limpar Arquivos Temporarios  *
 ECHO    * 14. Limpeza Interna              *
-ECHO    * 15. Reiniciar o Computador       *
-ECHO    * 16. Desligar o Computador        *
+
 ECHO     ==================================
 ECHO    * 65. Voltar ao Guia               *
 ECHO    * 50. Sair                         *
@@ -89,8 +87,11 @@ IF %opcao% EQU 4 GOTO opcao4
 IF %opcao% EQU 5 GOTO opcao5
 IF %opcao% EQU 6 GOTO opcao6
 IF %opcao% EQU 7 GOTO opcao7
-IF %opcao% EQU 8 GOTO opcao8
-IF %opcao% EQU 9 GOTO opcao9
+
+::IF %opcao% EQU 8 GOTO EXE
+::IF %opcao% EQU 9 GOTO REDE
+
+
 IF %opcao% EQU 10 GOTO opcao10
 IF %opcao% EQU 11 GOTO opcao11
 IF %opcao% EQU 12 GOTO opcao12
@@ -114,58 +115,10 @@ IF %opcao% GEQ 17 GOTO opcao100
 
 ECHO copyright
 
-REM  Melhorando sua internet
-:opcao70
-CLS
-ipconfig /flushdns
-ECHO  =======================================
-netsh winsock reset
-ECHO  =======================================
-nbtstat -R
-ECHO  =======================================
-PAUSE
-GOTO menu
 
 :opcao85
 CLS
-SFC SCANNOW
-PAUSE
-GOTO menu
-
-
-REM Copia Arquivos da Pasta 'Documentos' Para Uma Pasta de Backup; Insira Seu Endereço de Escolha
-:opcao1
-CLS
-TITLE BACK UP - Documents
-ECHO  				 ==================================
-ECHO  				*      Operacao em Andamento      *
-ECHO  				 ==================================
-XCOPY /T /E /-Y /C  %userprofile%\Documents\*.*  C:\BackupDocuments
-ECHO  				 ==================================
-ECHO  				*         Backup Concluido         *
-ECHO  				 ==================================
-PAUSE
-GOTO menu
-
-
-REM MOVE Todos os Arquivos do Desktop Para Uma Pasta de Backup
-:opcao2
-CLS
-TITLE BACK UP - Desktop
-ECHO 				 ==================================
-ECHO  				*       Operacao em Andamento      *
-ECHO  				 ==================================
-CD C:\
-IF EXIST C:\BackupDesktop (
-	CD %userprofile%\Desktop
-	MOVE /-Y * C:\BackupDesktop
-) ELSE (
-	MD BackupDesktop
-	CD %userprofile%\Desktop
-	MOVE /-Y * C:\BackupDesktop
-ECHO   				 ==================================
-ECHO  				*         Limpeza Concluida        *
-ECHO   				 ==================================
+SFC /scannow
 PAUSE
 GOTO menu
 
@@ -199,53 +152,8 @@ systeminfo > c:\INFO.txt
 ECHO   				 ==================================
 ECHO   				 Arquivo INFO.txt gerado no disco C:
 ECHO   				 ==================================
-
 PAUSE
 GOTO menu
-
-
-REM Iniciar executáveis 
-:opcao5
-CLS
-START calc.exe
-GOTO menu
-
-:opcao6
-CLS
-START control.exe
-GOTO menu
-
-:opcao7
-CLS
-START taskmgr.exe
-GOTO menu
-
-:opcao8
-CLS
-START appwiz.cpl
-GOTO menu
-
-
-REM Teste de instabilidade 
-:opcao9
-CLS
-TITLE TESTANDO ...
-ECHO  =======================================
-ECHO + SERAO ENVIADOS 10 PACOTES DE 32 BYTES  +
-ECHO + EM 2 ENDERECOS AVULSOS (GOOGLE/YOUTUBE)+
-ECHO  =======================================
-PING www.google.com -n 10
-PAUSE
-PING www.youtube.com -n 10
-PAUSE
-ECHO  =======================================
-ECHO + VERIFIQUE TAXA DE ENVIADOS ~ RECEBIDOS +
-ECHO + SE VARIAR POUCO: CONEXAO ESTAVEL       +
-ECHO + SE VARIAR MUITO: ALGO ERRADO           +
-ECHO  =======================================
-PAUSE
-GOTO menu
-
 
 REM Apaga Todos os Arquivos da Lixeira
 :opcao10
@@ -344,10 +252,211 @@ SC Delete dmwappushservice
 PAUSE
 GOTO menu
 
-:opcao15
+
+:opcao50
+	CLS
+	exit
+
+:opcao100
+	ECHO  ======================================
+	ECHO * Opcao Invalida! Escolha outra opcao. *
+	ECHO  ======================================
+	PAUSE
+	GOTO menu
+
+:fail
+	ECHO Senha incorreta, tente novamente.
+	PAUSE
+	GOTO control
+
+
+:github
+	START https://github.com/joaovMiranda
+	CLS
+	GOTO menu
+
+:BACKUP
+	CLS
+	REM Iniciar executáveis 
+	TITLE EXECUTAVEIS
+	ECHO  ------------------------------
+	ECHO    * 1.  Fazer Backup dos Documentos  * 
+	ECHO    * 2.  Limpar Area de Trabalho      *
+	ECHO    * 3.  Voltar                       *
+	ECHO  ------------------------------
+	SET /p bac= Selecione :
+
+	IF %bac% EQU 1 GOTO bac1
+	IF %bac% EQU 2 GOTO bac2
+	IF %bac% EQU 3 GOTO bac3
+
+	IF %bac% GTR 5 GOTO bac6
+	IF %bac% LSS 1 GOTO bac6
+
+	:bac1
+		REM Copia Arquivos da Pasta 'Documentos' Para Uma Pasta de Backup; Insira Seu Endereço de Escolha
+		CLS
+		TITLE BACK UP - Documents
+		ECHO  				 ==================================
+		ECHO  				*      Operacao em Andamento      *
+		ECHO  				 ==================================
+		XCOPY /T /E /-Y /C  %userprofile%\Documents\*.*  C:\BackupDocuments
+		ECHO  				 ==================================
+		ECHO  				*         Backup Concluido         *
+		ECHO  				 ==================================
+		PAUSE
+		GOTO menu
+	
+	:bac2
+		REM MOVE Todos os Arquivos do Desktop Para Uma Pasta de Backup
+		CLS
+		TITLE BACK UP - Desktop
+		ECHO 				 ==================================
+		ECHO  				*       Operacao em Andamento      *
+		ECHO  				 ==================================
+		CD C:\
+		IF EXIST C:\BackupDesktop (
+			CD %userprofile%\Desktop
+			MOVE /-Y * C:\BackupDesktop
+		) ELSE (
+			MD BackupDesktop
+			CD %userprofile%\Desktop
+			MOVE /-Y * C:\BackupDesktop
+		ECHO   				 ==================================
+		ECHO  				*         Limpeza Concluida        *
+		ECHO   				 ==================================
+		PAUSE
+		GOTO menu
+
+	:bac3
+		CLS
+		GOTO menu
+
+	:bac6
+		ECHO 	=======================================
+		ECHO * Opcao Invalida! Escolha outra opcao.    *
+		ECHO 	=======================================
+		PAUSE
+		GOTO EXE
+
+
+:EXE
+	CLS
+	REM Iniciar executáveis 
+	TITLE EXECUTAVEIS
+	ECHO  ------------------------------
+	ECHO    * 1.  Abrir Calculadora            *
+	ECHO    * 2.  Abrir Painel de Controle     *
+	ECHO    * 3.  Abrir Ger. Tarefas           *
+	ECHO    * 4.  Desinstalar Programas        *
+	ECHO    * 5.  Voltar                       *
+	ECHO  ------------------------------
+	SET /p exec= Selecione :
+
+	IF %exec% EQU 1 GOTO exec1
+	IF %exec% EQU 2 GOTO exec2
+	IF %exec% EQU 3 GOTO exec3
+	IF %exec% EQU 4 GOTO exec4
+	IF %exec% EQU 5 GOTO exec5
+
+	IF %exec% GTR 5 GOTO exec6
+	IF %exec% LSS 1 GOTO exec6
+
+	:exec1
+		CLS
+		START calc.exe
+		GOTO EXE
+
+	:exec2
+		CLS
+		START control.exe
+		GOTO EXE
+
+	:exec3
+		CLS
+		START taskmgr.exe
+		GOTO EXE
+
+	:exec4
+		CLS
+		START appwiz.cpl
+		GOTO EXE
+
+	:exec5
+		CLS
+		GOTO menu
+
+	:exec6
+		ECHO 	=======================================
+		ECHO * Opcao Invalida! Escolha outra opcao.    *
+		ECHO 	=======================================
+		PAUSE
+		GOTO EXE
+
+
+:REDE
+	CLS
+	TITLE REDE 
+	ECHO  ------------------------------
+	ECHO *   1. Teste de TCP            *
+	ECHO *   2. Melhorar a Internet     *
+	ECHO *   3. Voltar                  *
+	ECHO  ------------------------------
+	SET /p red= Selecione :
+
+	IF %red% EQU 1 GOTO oppp1
+	IF %red% EQU 2 GOTO oppp2
+	IF %red% EQU 3 GOTO oppp3
+
+	IF %red% GTR 3 GOTO oppp4
+	IF %red% LSS 1 GOTO oppp4
+
+	:oppp1
+		REM Teste de instabilidade 
+		CLS
+		TITLE TESTANDO ...
+		ECHO  =======================================
+		ECHO + SERAO ENVIADOS 10 PACOTES DE 32 BYTES  +
+		ECHO + EM 2 ENDERECOS AVULSOS (GOOGLE/YOUTUBE)+
+		ECHO  =======================================
+		PING www.google.com -n 10
+		PAUSE
+		PING www.youtube.com -n 10
+		PAUSE
+		ECHO  =======================================
+		ECHO + VERIFIQUE TAXA DE ENVIADOS ~ RECEBIDOS +
+		ECHO + SE VARIAR POUCO: CONEXAO ESTAVEL       +
+		ECHO + SE VARIAR MUITO: ALGO ERRADO           +
+		ECHO  =======================================
+		PAUSE
+		GOTO menu
+	:oppp2
+		REM  Melhorando sua internet
+		CLS
+		TITLE TRABALHANDO ...
+		ipconfig /flushdns
+		ECHO  =======================================
+		netsh winsock reset
+		ECHO  =======================================
+		nbtstat -R
+		ECHO  =======================================
+		PAUSE
+		GOTO menu
+	:oppp3
+		CLS
+		GOTO menu
+	:oppp4
+		ECHO 	=======================================
+		ECHO * Opcao Invalida! Escolha outra opcao.    *
+		ECHO 	=======================================
+		PAUSE
+		GOTO REDE
+
+:REINICIAR
 CLS
 COLOR 2
 REM Estrutura de Afirmação para Checar a Escolha do Usuario
+TITLE REINICIAR
 ECHO  ------------------------------
 ECHO *  1. = Yes                    *
 ECHO *  0. = No                     *
@@ -368,9 +477,10 @@ IF %rein% LSS 0 GOTO op3
 	PAUSE
 	GOTO opcao15
 
-:opcao16
+:DESLIGAR
 CLS
 COLOR 2
+TITLE DESLIGAR
 ECHO  ------------------------------
 ECHO *  1. = Yes                    *
 ECHO *  0. = No                     *
@@ -381,39 +491,15 @@ IF %shut% GTR 1 GOTO opp3
 IF %shut% EQU 0 GOTO opp2
 IF %shut% LSS 0 GOTO opp3
 	:opp1
-	shutdown -r -c "O Seu Computador Sera Desligado" -p
+		shutdown -r -c "O Seu Computador Sera Desligado" -p
 	:opp2
-	GOTO menu
+		GOTO menu
 	:opp3
-	ECHO 	=======================================
-	ECHO * Opcao Invalida! Escolha outra opcao. (1/0) *
-	ECHO 	=======================================
-	PAUSE
-	GOTO opcao16
-
-:opcao50
-CLS
-exit
-
-:opcao100
-ECHO  ======================================
-ECHO * Opcao Invalida! Escolha outra opcao. *
-ECHO  ======================================
-PAUSE
-GOTO menu
-
-:fail
-ECHO Senha incorreta, tente novamente.
-PAUSE
-GOTO control
-
-
-:github
-START https://github.com/joaovMiranda
-CLS
-GOTO menu
-
-
+		ECHO 	=======================================
+		ECHO * Opcao Invalida! Escolha outra opcao. (1/0) *
+		ECHO 	=======================================
+		PAUSE
+		GOTO opcao16
 
 
 
