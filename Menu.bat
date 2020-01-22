@@ -109,13 +109,14 @@ REM Informações sobre a máquina
 :LIMP
 	CLS
 	TITLE LIMPEZA
-	ECHO     ------------------------------
+	ECHO        ---- MENU DE LIMPEZA ----
+	ECHO     ===============================
 	ECHO    * 1. Esvaziar a Lixeira         *
 	ECHO    * 2. Limpeza Interna            *
 	ECHO    * 3. Limpar Arquivos Temporarios*
 	ECHO    * 4. Limpar Fila de Impressao   *
 	ECHO    * 5. Voltar                     *
-	ECHO     ------------------------------
+	ECHO     ===============================
 	SET /p limp= Selecione :
 
 	IF %limp% EQU 1 GOTO limp1
@@ -133,7 +134,7 @@ REM Apaga Todos os Arquivos da Lixeira
 		TITLE LIMPANDO ...
 		RD /S /Q c:\$Recycle.bin
 		ECHO  ==================================
-		ECHO *      Lixeira Esvaziada           *
+		ECHO *        Lixeira Esvaziada         *
 		ECHO  ==================================
 		PAUSE
 		GOTO menu
@@ -162,6 +163,9 @@ REM Apagando arquivos desnecessarios
 		SC stop dmwappushservice
 		SC Delete DiagTrack
 		SC Delete dmwappushservice
+		ECHO  ==================================
+		ECHO *        Limpeza Concluida         *
+		ECHO  ==================================
 		PAUSE
 		GOTO menu
 
@@ -169,17 +173,20 @@ REM Limpar Arquivos Temporarios
 	:limp3
 		TITLE LIMPANDO ARQUIVOS TEMP...
 		IF EXIST c:\windows\temp\ (
-		forfiles /p C:\Windows\Temp /s /m *.* /D -7 /C “cmd /c del /Q @path”
+			forfiles /p C:\Windows\Temp /s /m *.* /D -7 /C “cmd /c del /Q @path”
 		)
 		IF EXIST C:\Users\ (
-		for /D %%x in (“C:\Users\*”) do (
-		forfiles /p %%x\AppData\Local\Temp /s /m *.* /D -7 /C “cmd /c del /Q @path”
-		forfiles /p %%x\AppData\Local\Microsoft\Windows\Temporary Internet Files /s /m *.* /D -7 /C “cmd /c del /Q @path”
-		forfiles /p %%x\AppData\Local\Microsoft\Windows\WER\ReportQueue /s /m *.* /C “cmd /c del /Q @path”
+			for /D %%x in (“C:\Users\*”) do (
+				forfiles /p %%x\AppData\Local\Temp /s /m *.* /D -7 /C “cmd /c del /Q @path”
+				forfiles /p %%x\AppData\Local\Microsoft\Windows\Temporary Internet Files /s /m *.* /D -7 /C “cmd /c del /Q @path”
+				forfiles /p %%x\AppData\Local\Microsoft\Windows\WER\ReportQueue /s /m *.* /C “cmd /c del /Q @path”
+			)
 		)
-		)
-	PAUSE
-	GOTO menu
+		ECHO  ==================================
+		ECHO *        Limpeza Concluida         *
+		ECHO  ==================================
+		PAUSE
+		GOTO menu
 
 REM Limpar fila de impressão 	
 	:limp4
@@ -211,13 +218,15 @@ REM Limpar fila de impressão
 REM Opções de Disco
 :DISCO
 	CLS
-	TITLE LIMPEZA
-	ECHO     ------------------------------
-	ECHO    * 1. Desfragmantar disco (C:)   *
+	TITLE DISCO 
+	
+	ECHO         ---- MENU DE DISCO ----
+	ECHO     ===============================
+	ECHO    * 1. Desfragmentar disco (C:)   *
 	ECHO    * 2. Verificar Integridade      *
-	ECHO    * 3. Checar saúde do Disco      *
+	ECHO    * 3. Checar Saude do Disco      *
 	ECHO    * 4. Voltar                     *
-	ECHO     ------------------------------
+	ECHO     ===============================
 	SET /p disc= Selecione :
 
 	IF %disc% EQU 1 GOTO disc1
@@ -293,11 +302,12 @@ REM Tipos de BackUP
 :BACKUP
 	CLS
 	TITLE BACK-UP
-	ECHO     ---------------------------------
+	ECHO          ---- MENU DE BACKUP ----
+	ECHO     ==================================
 	ECHO    * 1.  Fazer Backup dos Documentos  * 
 	ECHO    * 2.  Limpar Area de Trabalho      *
 	ECHO    * 3.  Voltar                       *
-	ECHO     ---------------------------------
+	ECHO     ==================================
 	SET /p bac= Selecione :
 
 	IF %bac% EQU 1 GOTO bac1
@@ -348,7 +358,7 @@ REM MOVE Todos os Arquivos do Desktop Para Uma Pasta de Backup
 
 	:bac6
 		ECHO 	=======================================
-		ECHO * Opcao Invalida! Escolha outra opcao.    *
+		ECHO   * Opcao Invalida! Escolha outra opcao.    *
 		ECHO 	=======================================
 		PAUSE
 		GOTO EXE
@@ -357,13 +367,14 @@ REM MOVE Todos os Arquivos do Desktop Para Uma Pasta de Backup
 REM Iniciar executáveis 
 	CLS
 	TITLE EXECUTAVEIS
-	ECHO      ------------------------------
+	ECHO         ---- ABRIR EXECUTAVEIS ----
+	ECHO      =================================
 	ECHO    * 1.  Abrir Calculadora            *
 	ECHO    * 2.  Abrir Painel de Controle     *
 	ECHO    * 3.  Abrir Ger. Tarefas           *
 	ECHO    * 4.  Desinstalar Programas        *
 	ECHO    * 5.  Voltar                       *
-	ECHO      ------------------------------
+	ECHO      =================================
 	SET /p exec= Selecione :
 
 	IF %exec% EQU 1 GOTO exec1
@@ -401,7 +412,7 @@ REM Iniciar executáveis
 
 	:exec6
 		ECHO 	=======================================
-		ECHO * Opcao Invalida! Escolha outra opcao.    *
+		ECHO   * Opcao Invalida! Escolha outra opcao.   *
 		ECHO 	=======================================
 		PAUSE
 		GOTO EXE
@@ -409,11 +420,12 @@ REM Iniciar executáveis
 :REDE
 	CLS
 	TITLE REDE 
-	ECHO  ------------------------------
+	ECHO     ---- OPCOES DE REDE ----
+	ECHO  ==============================
 	ECHO *   1. Teste de TCP            *
 	ECHO *   2. Melhorar a Internet     *
 	ECHO *   3. Voltar                  *
-	ECHO  ------------------------------
+	ECHO  ==============================
 	SET /p red= Selecione :
 	IF %red% EQU 1 GOTO oppp1
 	IF %red% EQU 2 GOTO oppp2
@@ -461,7 +473,7 @@ REM  Melhorando sua internet
 
 	:oppp4
 		ECHO 	=======================================
-		ECHO * Opcao Invalida! Escolha outra opcao.    *
+		ECHO   * Opcao Invalida! Escolha outra opcao.  *
 		ECHO 	=======================================
 		PAUSE
 		GOTO REDE
