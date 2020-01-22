@@ -19,9 +19,9 @@
 #### Abrir Executaveis
 
 #### Reiniciar o Computador
-    * Entra na estrutura de validação, isto é, se a opção for 'SIM':
-    * Inicia o comando shutdown -r -c, onde o parâmetro “r” vem de __R__eboot;
-    * Se 'NÃO', volta ao MENU TAREFAS
+ * Entra na estrutura de validação, isto é, se a opção for 'SIM';
+   Inicia o comando shutdown -r -c, onde o parâmetro “r” vem de **R**eboot;
+   Se 'NÃO', volta ao **MENU TAREFAS**;
 
 #### Desligar o Computador 
     * Inicia o comando shutdown -s -c, onde o parâmetro “s” vem de __S__hutdown;
