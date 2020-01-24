@@ -517,7 +517,7 @@ REM  Melhorando sua internet
 	IF %shut% EQU 0 GOTO opp2
 	IF %shut% LSS 0 GOTO opp3
 		:opp1
-			shutdown -s -c "O Seu Computador Sera Desligado" -p
+			shutdown -s -c "O Seu Computador Sera Desligado" -f
 		:opp2
 			GOTO menu
 		:opp3
