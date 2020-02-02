@@ -1,7 +1,7 @@
 :: Nome   : Menu.bat
 :: Motivo : Agilizar pequenas ações diárias.
 :: Autor  : github.com/joaovMiranda
-:: VERSÃO : 1.4.3
+:: VERSÃO : 1.4.4
 @ECHO off
 
 ::ECHO MSGBOX "PARA TOTAL FUNCIONALIDADE EH ACONSELHADO EXECUTAR O ARQUIVO COMO ADMINISTRADOR",256,"MENU AGIL" >%temp%\mensagem1.vbs
@@ -11,10 +11,10 @@ REM Autenticação
 CLS
 REM TITLE CONTROLE DE ACESSO
 REM COLOR b
-rem :control
-rem echo enter password to activate programme
-rem set/p "pass=>"
-rem if NOT %pass%== 123 goto fail
+REM :control
+REM echo enter password to activate programme
+REM SET/p "pass=>"
+REM IF NOT %pass%== admin GOTO fail
 
 
 :wellcome
@@ -52,7 +52,7 @@ REM Acessando Dados do Computador
 	ECHO    COMPUTADOR: %computername% 
 	ECHO    DATA: %date%   %time%
 
-	ECHO    (c) 2019 Microsoft Corporation. Todos os direitos reservados.                                                                   
+	ECHO    Copyright (c) 2020 João Miranda                                                                   
 																
 																																		
 	ECHO          ----- MENU TAREFAS -----
@@ -98,7 +98,7 @@ REM Informações sobre a máquina
 	ECHO 				 ==================================
 	ECHO 				*           SUA PLACA MAE          *
 	ECHO 				 ==================================
-	wmic baseboard get product, manufacturer, version, serialnumber
+	WMIC baseboard get product, manufacturer, version, serialnumber
 	ECHO 				 ==================================
 	ECHO 				*        ESQUEMAS DE ENERGIA       *
 	ECHO 				 ==================================
@@ -141,7 +141,7 @@ REM Apaga Todos os Arquivos da Lixeira
 	:limp1
 		CLS
 		TITLE LIMPANDO ...
-		RD /S /Q c:\$Recycle.bin
+		RD /S /Q C:\$Recycle.bin
 		ECHO  ==================================
 		ECHO *        Lixeira Esvaziada         *
 		ECHO  ==================================
@@ -182,13 +182,13 @@ REM Limpar Arquivos Temporarios
 	:limp3
 		TITLE LIMPANDO ARQUIVOS TEMP...
 		IF EXIST c:\windows\temp\ (
-			forfiles /p C:\Windows\Temp /s /m *.* /D -7 /C “cmd /c del /Q @path”
+			FORFILES /P C:\Windows\Temp /s /m *.* /D -7 /C “cmd /c del /Q @path”
 		)
 		IF EXIST C:\Users\ (
 			for /D %%x in (“C:\Users\*”) do (
-				forfiles /p %%x\AppData\Local\Temp /s /m *.* /D -7 /C “cmd /c del /Q @path”
-				forfiles /p %%x\AppData\Local\Microsoft\Windows\Temporary Internet Files /s /m *.* /D -7 /C “cmd /c del /Q @path”
-				forfiles /p %%x\AppData\Local\Microsoft\Windows\WER\ReportQueue /s /m *.* /C “cmd /c del /Q @path”
+				FORFILES /P %%x\AppData\Local\Temp /s /m *.* /D -7 /C “cmd /c del /Q @path”
+				FORFILES /P %%x\AppData\Local\Microsoft\Windows\Temporary Internet Files /s /m *.* /D -7 /C “cmd /c del /Q @path”
+				FORFILES /P %%x\AppData\Local\Microsoft\Windows\WER\ReportQueue /s /m *.* /C “cmd /c del /Q @path”
 			)
 		)
 		ECHO  ==================================
@@ -474,7 +474,7 @@ REM  Melhorando sua internet
 		ECHO  =======================================
 		netsh winsock reset
 		ECHO  =======================================
-		nbtstat -R
+		NBTSTAT -R
 		ECHO  =======================================
 		PAUSE
 		GOTO menu
