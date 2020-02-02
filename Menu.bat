@@ -4,13 +4,18 @@
 :: VERSÃO : 1.4.3
 @ECHO off
 
+::ECHO MSGBOX "PARA TOTAL FUNCIONALIDADE EH ACONSELHADO EXECUTAR O ARQUIVO COMO ADMINISTRADOR",256,"MENU AGIL" >%temp%\mensagem1.vbs
+::START %temp%\mensagem1.vbs
+
+REM Autenticação
 CLS
-TITLE CONTROLE DE ACESSO
-COLOR b
+REM TITLE CONTROLE DE ACESSO
+REM COLOR b
 rem :control
 rem echo enter password to activate programme
 rem set/p "pass=>"
 rem if NOT %pass%== 123 goto fail
+
 
 :wellcome
 CLS
@@ -66,8 +71,7 @@ REM Acessando Dados do Computador
 	ECHO    * 50. Sair                         *
 	ECHO     ==================================
 
-
-	REM Estrutura de Afirmações Para Menu
+REM Estrutura de Afirmações Para Menu
 	SET /p opcao= Escolha uma opcao: 
 	ECHO ------------------------------
 	IF %opcao% EQU 1 GOTO INFO
@@ -82,7 +86,7 @@ REM Acessando Dados do Computador
 	IF %opcao% EQU 10 GOTO github
 	IF %opcao% EQU 50 GOTO EXIT
 
-	REM Se menor que 1 ou igual maior que X : Opção inválida
+REM Se menor que 1 ou igual maior que X : Opção inválida
 	IF %opcao% LSS 1 GOTO ERROR
 
 
@@ -95,11 +99,16 @@ REM Informações sobre a máquina
 	ECHO 				*           SUA PLACA MAE          *
 	ECHO 				 ==================================
 	wmic baseboard get product, manufacturer, version, serialnumber
+	ECHO 				 ==================================
+	ECHO 				*        ESQUEMAS DE ENERGIA       *
+	ECHO 				 ==================================
+	POWERCFG /L 
 	ECHO   				 ==================================
 	ECHO  				*      INFORMACOES DO SISTEMA      *
 	ECHO  				 ==================================
-	systeminfo
-	systeminfo > c:\INFO.txt
+	VOL
+	SYSTEMINFO
+	SYSTEMINFO > c:\INFO.txt
 	ECHO   				 ==================================
 	ECHO   				 Arquivo INFO.txt gerado no disco C:
 	ECHO   				 ==================================
@@ -424,15 +433,18 @@ REM Iniciar executáveis
 	ECHO  ==============================
 	ECHO *   1. Teste de TCP            *
 	ECHO *   2. Melhorar a Internet     *
-	ECHO *   3. Voltar                  *
+	ECHO *   3. Informacoes da rede     *
+	ECHO *   4. Voltar                  *
 	ECHO  ==============================
 	SET /p red= Selecione :
 	IF %red% EQU 1 GOTO oppp1
 	IF %red% EQU 2 GOTO oppp2
 	IF %red% EQU 3 GOTO oppp3
+	IF %red% EQU 4 GOTO oppp4
 
-	IF %red% GTR 3 GOTO oppp4
-	IF %red% LSS 1 GOTO oppp4
+
+	IF %red% GTR 4 GOTO oppp5
+	IF %red% LSS 1 GOTO oppp5
 
 REM Teste de instabilidade 
 	:oppp1
@@ -458,7 +470,7 @@ REM  Melhorando sua internet
 	:oppp2
 		CLS
 		TITLE TRABALHANDO ...
-		ipconfig /flushdns
+		IPCONFIG /flushdns
 		ECHO  =======================================
 		netsh winsock reset
 		ECHO  =======================================
@@ -469,9 +481,19 @@ REM  Melhorando sua internet
 
 	:oppp3
 		CLS
+		TITLE INFORMACOES DA REDE
+		ECHO                    ===================
+		ECHO                   * Dados de conexao  * 
+		ECHO                    ===================
+		IPCONFIG  /ALL
+		PAUSE
 		GOTO menu
 
 	:oppp4
+		CLS
+		GOTO menu
+
+	:oppp5
 		ECHO 	=======================================
 		ECHO   * Opcao Invalida! Escolha outra opcao.  *
 		ECHO 	=======================================
@@ -566,11 +588,11 @@ REM  Melhorando sua internet
 ::GOTO menu
 ::TASKKILL /F /IM wscript.exe
 
-::echo msgbox "EVITE ABRIR QUALQUER PROGRAMA DURANTE A OPERACAO!",vbinformation,"INICIANDO" >%temp%\mensagem1.vbs
-::start %temp%\mensagem1.vbs
 
- ::RunDll32.exe Inetcpl.cpl, ClearMyTracksByProcess 16
-
+::DRIVERQUERY 
+::RunDll32.exe Inetcpl.cpl, ClearMyTracksByProcess 16
+:: PERFMON
+::powercfg /?
 ::TREE /?
 ::D::IR /?
 ::NETSTAT /?
