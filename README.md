@@ -3,10 +3,33 @@
 
  * Menu em BatchFile para computadores lentos e de baixa qualidade, auxilia na inicialização de comandos primarios;
 
- O menu se divide em uma estrutura de arvore, isto é: 
-    Menu de tarefas se divide em outros submenus onde cada um dels oferece opções a serem seguidas.
+ O menu se divide em uma estrutura de arvore, isto é, 
+    Menu de tarefas se divide em outros submenus onde cada um deles oferece opções a serem seguidas.
 
-#### 1) Informacoes da Maquina     
+#### 1) Informacoes da Maquina  
+ * Inicia os comandos:  
+ 
+````
+WMIC baseboard get product, manufacturer, version, serialnumber
+````
+> Mostra informações sobrea a placa mãe
+
+````
+POWERCFG /L
+````
+> Lista todos os esquemas de energia;  
+Onde o parâmetro 'l' vem de **L**ist;
+
+````
+VOL
+````
+> Exibe o nome e o número de série do disco;
+
+````
+SYSTEMINFO > c:\INFO.txt
+````
+> Esta ferramenta exibe informações de configuração de sistema para um computador, inclusive níveis de service pack;  
+É criado um arquivo .txt no disco C: contendo todas essas informações;  
 
 #### 2) Opcoes de Limpeza   
 
@@ -16,15 +39,32 @@
 
 #### 5) Opcoes de Rede 
 * Entra na estrutura de escolha, isto é, selecionar entre as opções:
+
 1. Teste de TCP  
  ```
  PING www.google.com -n 10
  PING www.youtube.com -n 10
  ```
-> Serão enviados 10 pacotes de 32 bytes
+> O comando **PING** verifica a conectividade no nível de IP para outro computador TCP/IP enviando mensagens de solicitação de eco ICMP. O recebimento de mensagens de resposta de eco correspondentes é exibido, juntamente com tempos de ida e volta;  
+São passados como parâmetros o Google e o Youtube;  
+Onde o parâmetro 'n' vem de **N**umber of requests;
 
 2. Melhorar a Internet  
-	  
+
+```
+IPCONFIG /flushdns
+```
+> Limpa o cache do DNS Resolver.
+
+```
+netsh winsock reset
+```
+> Comando para redefinir o catálogo winsock de volta à configuração padrão ou ao estado limpo.  
+```
+NBTSTAT -R
+```
+> Limpa e recarrega a tabela de nomes de caches remotas;  
+Onde o parâmetro 'r' vem de **R**echarge;
 
 
 #### 6) Abrir Executaveis
@@ -84,6 +124,6 @@ O parâmetro 'f' vem de **F**orce;
 ```
 START https://github.com/joaovMiranda/Menu_Agil
 ```
-> Abre o [repositório do Menu Agil](https://github.com/joaovMiranda/Menu_Agil)
+> Abre o repositório do [Menu Agil](https://github.com/joaovMiranda/Menu_Agil)
 
 
