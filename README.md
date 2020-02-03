@@ -46,6 +46,37 @@ RD /S /Q c:\$Recycle.bin
 Onde o parâmetro 'S' vem de **S**ubdirectories. Exclui uma árvore de diretórios e todos os seus subdiretórios, incluindo todos os arquivos;  
 E o parâmetro 'Q' vem de **Q**uiet. Não solicita confirmação ao excluir uma árvore de diretórios.  
 
+**2. Limpeza Interna**  
+```bat
+DEL C:\Windows\System32\CLINT.*.*  /q
+DEL C:\Windows\System32\LOAD.*.*   /q
+DEL C:\Windows\System32\GIF.*.* /q
+DEL c:\windows\spool\printers   /q
+DEL /s C:\windows\temp\*.* /q 
+DEL /F /S /Q C:\WINDOWS\Temp\*.*
+DEL "%WINDIR%\Temp\*.*" /F /S /Q
+RD /S /Q "%HOMEPATH%\Config~1\Temp"
+MD "%HOMEPATH%\Config~1\Temp"
+RD /S /Q C:\WINDOWS\Temp\
+MD C:\WINDOWS\Temp
+DEL /F /S /Q %HOMEPATH%\Config~1\Temp\*.*
+DEL %temp% /q
+RD /S /Q C:\RECYCLER\ 
+DEL /s   C:\windows\system32\dllcache   /q
+DEL /s   C:\MSOCache\*.*   /q
+SC stop DiagTrack
+SC stop dmwappushservice
+SC Delete DiagTrack
+SC Delete dmwappushservice
+```
+> O comando **DEL** deleta os arquivos;  
+Onde o parâmetro 'S' vem de **S**ubDirectory. Instrui a incluir subpastas;  
+O parâmetro 'Q' vem de **Q**uiet. Não solicita confirmação ao excluir;  
+E o parâmetro 'F' vem de **F**orce. Força a exclusão de arquivos somente leitura.  
+O **SC** é uma linha de comando usado para a comunicação com o Gerenciador de Controle de Serviço e os serviços.  
+Deleta o 'DiagTrack'. O processo de rastreamento de diagnóstico do Microsoft Windows;  
+Deleta o 'dmwappushservice'. Um keylogger que coleta informações sobre a utilização do computador e, em seguida, as envia para os servidores da Microsoft.  
+
 **3. Limpar arquivos temporarios**
 * Antes de inicar o processo é válidado para **se** existir os respectivos diretórios.  
 
@@ -68,7 +99,17 @@ IF EXIST c:\windows\temp\ (
  O parâmetro 'C' vem de **C**ommand. Indica o comando a ser executado para cada arquivo;  
  O parâmetro 'D' vem de **D**ata. Seleciona os arquivos com uma data da última modificação;  
  E o parâmetro 'Q' vem de **Q**uiet. Não solicita confirmação ao excluir.  
-
+ 
+ **4. Limpar fila de impressão**  
+ ```bat
+NET STOP spooler
+C:
+CD %systemroot%\system32\spool\printers
+DEL /F /S *.shd
+DEL /F /S *.spl
+NET START spooler
+```
+> Pausa o serviço de impressão e deleta os arquivos da fila.  
 
 #### 3) Opcoes de DISCO  
 
@@ -162,25 +203,46 @@ O parâmetro 'f' vem de **F**orce.
 ```bat
 START https://github.com/joaovMiranda/Menu_Agil
 ```
-> :link: Abre o [repositório do Menu Agil](https://github.com/joaovMiranda/Menu_Agil)  
+> Abre o [repositório do Menu Agil](https://github.com/joaovMiranda/Menu_Agil) :link:  
 
 ### Configurações
 
  * Clique com o botão direito do mouse no arquivo e selecione o 'editar':  
- ![Config](https://github.com/JoaovMiranda/Site_PKI/tree/master/Imgs/Git-MenuAgil.png)  
+  
+![Config](https://github.com/JoaovMiranda/Menu_Agil/blob/master/Imgs/Git-MenuAgil.png)  
 
- 
- - Para modificar a senha de acesso basta modificar a palavra 'admin' no trecho:  
+  
+ - Para alterar a senha de acesso basta modificar a palavra '**admin**' no trecho:  
  
  ```bat
- IF NOT %pass%== **admin** GOTO fail
+ IF NOT %pass%== admin GOTO fail
  ```
- >  Configure para letras e/ou números.   
+ >  Configure para letras e/ou números; :closed_lock_with_key:  
  
+ - Para remover a senha basta adcionar '::' no inicio dos comandos.  
  
+ ```bat
+:: :control
+:: ECHO enter password to activate programme
+:: SET/p "pass=>"
+:: IF NOT %pass%== admin GOTO fail
+ ```
+ >  Senha removida. :unlock:  
  
-- [x] Funcional em win 7
+ - Para remover o MsgBox inicial.
+ 
+ ```bat
+ECHO MSGBOX "PARA TOTAL FUNCIONALIDADE EH ACONSELHADO EXECUTAR O ARQUIVO COMO ADMINISTRADOR",256,"MENU AGIL" >%temp%\mensagem1.vbs
+START %temp%\mensagem1.vbs
+```
+> Basta adcionar o '::' no inicio dos comandos. :mute:  
+ 
+### Compatibilidade :computer:
+- [x] Funcional em win 7;  
 
+### Créditos
 
+-  Feito por **João Miranda** :shipit:
+-  Guiado pela [documentação oficial da Microsoft](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands) :link:  
 
 
