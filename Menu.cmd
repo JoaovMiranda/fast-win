@@ -1,4 +1,4 @@
-:: Nome   : Menu.bat
+:: Nome   : Menu.cmd
 :: Motivo : Agilizar pequenas ações diárias.
 :: Autor  : github.com/joaovMiranda
 :: VERSÃO : 1.4.4
@@ -7,24 +7,24 @@
 ::ECHO MSGBOX "PARA TOTAL FUNCIONALIDADE EH ACONSELHADO EXECUTAR O ARQUIVO COMO ADMINISTRADOR",256,"MENU AGIL" >%temp%\mensagem1.vbs
 ::START %temp%\mensagem1.vbs
 
-REM Autenticação
+:: Autenticação
 CLS
-REM TITLE CONTROLE DE ACESSO
-REM COLOR b
-REM :control
-REM echo enter password to activate programme
-REM SET/p "pass=>"
-REM IF NOT %pass%== admin GOTO fail
-
+:: TITLE CONTROLE DE ACESSO
+:: COLOR b
+:: :control
+:: echo enter password to activate programme
+:: SET/p "pass=>"
+:: IF NOT %pass%== admin GOTO fail
 
 :wellcome
 CLS
 TITLE BEM VINDO
+CHCP 65001 > nul
 ECHO  				 ==================================
 ECHO 				*            BEM VINDO             *
 ECHO 				*                                  * 
 ECHO 				* Guia:                            *
-ECHO 				* - Para total funcionalidade eh   *
+ECHO 				* - Para total funcionalidade éh   *
 ECHO 				*   necessario que o programa seja * 
 ECHO 				*   executado como administrador.  *
 ECHO 				* - Digite um numero natural(N*)   * 
@@ -37,31 +37,32 @@ ECHO 				*       MADE BY: Joao Miranda      *
 ECHO 				*      github.com/joaovMiranda     * 
 ECHO 				*                                  * 
 ECHO  				 ==================================
-PAUSE
+PAUSE > nul
 
-REM Criando Pagina Principal 
+:: Criando Pagina Principal 
 :menu
 	CLS
 	TITLE FACILITADOR DE COMANDOS
 	COLOR b
-REM Acessando Dados do Computador
-
-::MODE 40,35
-
+::	MODE 40,35
 	ECHO    USUARIO: %username% 
 	ECHO    COMPUTADOR: %computername% 
 	ECHO    DATA: %date%   %time%
+
+	ECHO %time:~0,2%
+	ECHO %time:~3,2%
+	ECHO %time:~6,2%.
 
 	ECHO    Copyright (c) 2020 João Miranda                                                                   
 																
 																																		
 	ECHO          ----- MENU TAREFAS -----
 	ECHO     ==================================
-	ECHO    * 1.  Informacoes da Maquina       *
-	ECHO    * 2.  Opcoes de Limpeza            * 
-	ECHO    * 3.  Opcoes de DISCO              * 
-	ECHO    * 4.  Opcoes de Backup             * 
-	ECHO    * 5.  Opcoes de Rede               *
+	ECHO    * 1.  Informacões da Maquina       *
+	ECHO    * 2.  Opcões de Limpeza            * 
+	ECHO    * 3.  Opcões de DISCO              * 
+	ECHO    * 4.  Opcões de Backup             * 
+	ECHO    * 5.  Opcões de Rede               *
 	ECHO    * 6.  Abrir Executaveis            *
 	ECHO    * 7.  Reiniciar o Computador       *
 	ECHO    * 8.  Desligar o Computador        *
@@ -71,7 +72,7 @@ REM Acessando Dados do Computador
 	ECHO    * 50. Sair                         *
 	ECHO     ==================================
 
-REM Estrutura de Afirmações Para Menu
+:: Estrutura de Afirmações Para Menu
 	SET /p opcao= Escolha uma opcao: 
 	ECHO ------------------------------
 	IF %opcao% EQU 1 GOTO INFO
@@ -86,11 +87,11 @@ REM Estrutura de Afirmações Para Menu
 	IF %opcao% EQU 10 GOTO github
 	IF %opcao% EQU 50 GOTO EXIT
 
-REM Se menor que 1 ou igual maior que X : Opção inválida
+:: Se menor que 1 ou igual maior que X : Opção inválida
 	IF %opcao% LSS 1 GOTO ERROR
 
 
-REM Informações sobre a máquina
+:: Informações sobre a máquina
 :INFO
 	CLS
 	TITLE INFORMACOES
@@ -126,7 +127,7 @@ REM Informações sobre a máquina
 	ECHO    * 4. Limpar Fila de Impressao   *
 	ECHO    * 5. Voltar                     *
 	ECHO     ===============================
-	SET /p limp= Selecione :
+	SET /p limp= Selecione: 
 
 	IF %limp% EQU 1 GOTO limp1
 	IF %limp% EQU 2 GOTO limp2
@@ -137,7 +138,7 @@ REM Informações sobre a máquina
 	IF %limp% GTR 5 GOTO limp6
 	IF %limp% LSS 1 GOTO limp6
 
-REM Apaga Todos os Arquivos da Lixeira
+:: Apaga Todos os Arquivos da Lixeira
 	:limp1
 		CLS
 		TITLE LIMPANDO ...
@@ -145,13 +146,14 @@ REM Apaga Todos os Arquivos da Lixeira
 		ECHO  ==================================
 		ECHO *        Lixeira Esvaziada         *
 		ECHO  ==================================
-		PAUSE
+		PAUSE>nul
 		GOTO menu
 
-REM Apagando arquivos desnecessarios
+:: Apagando arquivos desnecessarios
 	:limp2
 		TITLE LIMPANDO ARQUIVOS ...
 		CLS
+		TASKKILL /F /IM wscript.exe
 		DEL C:\Windows\System32\CLINT.*.*  /q
 		DEL C:\Windows\System32\LOAD.*.*   /q
 		DEL C:\Windows\System32\GIF.*.* /q
@@ -178,33 +180,77 @@ REM Apagando arquivos desnecessarios
 		PAUSE
 		GOTO menu
 
-REM Limpar Arquivos Temporarios
+:: Limpar Arquivos Temporarios
 	:limp3
 		TITLE LIMPANDO ARQUIVOS TEMP...
-		IF EXIST c:\windows\temp\ (
-			FORFILES /P C:\Windows\Temp /s /m *.* /D -7 /C “cmd /c del /Q @path”
-		)
-		IF EXIST C:\Users\ (
-			for /D %%x in (“C:\Users\*”) do (
-				FORFILES /P %%x\AppData\Local\Temp /s /m *.* /D -7 /C “cmd /c del /Q @path”
-				FORFILES /P %%x\AppData\Local\Microsoft\Windows\Temporary Internet Files /s /m *.* /D -7 /C “cmd /c del /Q @path”
-				FORFILES /P %%x\AppData\Local\Microsoft\Windows\WER\ReportQueue /s /m *.* /C “cmd /c del /Q @path”
+		CLS
+		IF EXIST c:\windows\temp\ DEL /f /s /q c:\windows\temp\
+		DEL /f /s /q %temp%\
+		IF EXIST “C:\Documents and Settings\” (
+			FOR /D %%x in (“C:\Documents and Settings\*”) do (
+				RMDIR /s /q “%%x\Local Settings\Temporary Internet Files”
+				mkdir “%%x\Local Settings\Temporary Internet Files”
 			)
 		)
+		IF EXIST “C:\Documents and Settings\” (
+			FOR /D %%x in (“C:\Documents and Settings\*”) do (
+				RMDIR /s /q “%%x\Local Settings\Temp”
+				MKDIR “%%x\Local Settings\Temp”
+			)
+		)
+		PAUSE
+		CLS
+		:limp3Cont
+			ECHO      ---- DESEJA ACAO PARA OUTROS USERS ? ----
+			ECHO          ===============================
+			ECHO         *           1. SIM              *
+			ECHO         *           0. NAO              *
+			ECHO          ===============================
+			SET /p Userop= Escolha uma opcao: 
+			IF %Userop% EQU 0 GOTO :limpC
+			IF %Userop% EQU 1 GOTO :limp3U
+			IF %Userop% GTR 1 GOTO :limp3F
+			IF %Userop% LSS 0 GOTO :limp3F
+			:limp3U
+				CLS
+				IF EXIST “C:\Users\” (
+					FOR /D %%x in (“C:\Users\*”) do (
+						RMDIR /s /q “%%x\AppData\Local\Temp”
+						MKDIR “%%x\AppData\Local\Temp”
+					)
+				)
+				IF EXIST “C:\Users\” (
+					FOR /D %%x in (“C:\Users\*”) do (
+						RMDIR /s /q “%%x\AppData\Local\Microsoft\Windows\Temporary Internet Files”
+						MKDIR “%%x\AppData\Local\Microsoft\Windows\Temporary Internet Files”
+					)
+				)
+			PAUSE
+			CLS	
+		GOTO :limpC
+		
+		:limpC
 		ECHO  ==================================
 		ECHO *        Limpeza Concluida         *
 		ECHO  ==================================
 		PAUSE
 		GOTO menu
 
-REM Limpar fila de impressão 	
+		:limp3F
+		ECHO  ==================================
+		ECHO *        Opção Errada              *
+		ECHO  ==================================
+		PAUSE
+		GOTO :limp3Cont
+
+:: Limpar fila de impressão 	
 	:limp4
 		CLS
 		NET STOP spooler
-		c:
+		C:
 		CD %systemroot%\system32\spool\printers
-		DEL /f/s *.shd
-		DEL /f/s *.spl
+		DEL /F /S *.shd
+		DEL /F /S *.spl
 		NET START spooler
 		ECHO  =======================================
 		ECHO +          Processo Finalizado          +
@@ -224,7 +270,7 @@ REM Limpar fila de impressão
 		PAUSE
 		GOTO LIMP
 
-REM Opções de Disco
+:: Opções de Disco
 :DISCO
 	CLS
 	TITLE DISCO 
@@ -236,7 +282,7 @@ REM Opções de Disco
 	ECHO    * 3. Checar Saude do Disco      *
 	ECHO    * 4. Voltar                     *
 	ECHO     ===============================
-	SET /p disc= Selecione :
+	SET /p disc= Selecione:
 
 	IF %disc% EQU 1 GOTO disc1
 	IF %disc% EQU 2 GOTO disc2
@@ -246,7 +292,7 @@ REM Opções de Disco
 	IF %disc% GTR 4 GOTO disc5
 	IF %disc% LSS 1 GOTO disc5
 
-REM Desfragmantar o disco
+:: Desfragmantar o disco
 	:disc1
 		CLS
 		TITLE OTIMIZANDO ...
@@ -277,14 +323,14 @@ REM Desfragmantar o disco
 				PAUSE
 				GOTO disc1 
 
-REM Escanear integridade do sistema
+:: Escanear integridade do sistema
 	:disc2
 		CLS
 		SFC /scannow
 		PAUSE
 		GOTO menu
 
-REM CHECKDISK 
+:: CHECKDISK 
 	:disc3
 		CLS
 		TITLE ESCANEANDO ...
@@ -307,7 +353,7 @@ REM CHECKDISK
 		PAUSE
 		GOTO DISCO
 
-REM Tipos de BackUP
+:: Tipos de BackUP
 :BACKUP
 	CLS
 	TITLE BACK-UP
@@ -326,7 +372,7 @@ REM Tipos de BackUP
 	IF %bac% GTR 3 GOTO bac6
 	IF %bac% LSS 1 GOTO bac6
 
-REM Copia Arquivos da Pasta 'Documentos' Para Uma Pasta de Backup; Insira Seu Endereço de Escolha
+:: Copia Arquivos da Pasta 'Documentos' Para Uma Pasta de Backup; Insira Seu Endereço de Escolha
 	:bac1
 		CLS
 		TITLE BACK UP - Documents
@@ -340,7 +386,7 @@ REM Copia Arquivos da Pasta 'Documentos' Para Uma Pasta de Backup; Insira Seu En
 		PAUSE
 		GOTO menu
 
-REM MOVE Todos os Arquivos do Desktop Para Uma Pasta de Backup
+:: MOVE Todos os Arquivos do Desktop Para Uma Pasta de Backup
 	:bac2
 		CLS
 		TITLE BACK UP - Desktop
@@ -373,7 +419,7 @@ REM MOVE Todos os Arquivos do Desktop Para Uma Pasta de Backup
 		GOTO EXE
 
 :EXE
-REM Iniciar executáveis 
+:: Iniciar executáveis 
 	CLS
 	TITLE EXECUTAVEIS
 	ECHO         ---- ABRIR EXECUTAVEIS ----
@@ -446,7 +492,7 @@ REM Iniciar executáveis
 	IF %red% GTR 4 GOTO oppp5
 	IF %red% LSS 1 GOTO oppp5
 
-REM Teste de instabilidade 
+:: Teste de instabilidade 
 	:oppp1
 		CLS
 		TITLE TESTANDO ...
@@ -466,7 +512,7 @@ REM Teste de instabilidade
 		PAUSE
 		GOTO menu
 
-REM  Melhorando sua internet
+::  Melhorando sua internet
 	:oppp2
 		CLS
 		TITLE TRABALHANDO ...
@@ -476,6 +522,7 @@ REM  Melhorando sua internet
 		ECHO  =======================================
 		NBTSTAT -R
 		ECHO  =======================================
+		
 		PAUSE
 		GOTO menu
 
@@ -503,7 +550,7 @@ REM  Melhorando sua internet
 :REINICIAR
 	CLS
 	COLOR 2
-	REM Estrutura de Afirmação para Checar a Escolha do Usuario
+	:: Estrutura de Afirmação para Checar a Escolha do Usuario
 	TITLE REINICIAR
 	ECHO  ------------------------------
 	ECHO *  1. = Yes                    *
@@ -572,27 +619,3 @@ REM  Melhorando sua internet
 
 
 
-
-
-
-
-
-
-::(A SER ADCIONADOS)
-:::opcao30
-::CLS 
-::NET USE z:servidor\compartilhamento
-::z:
-::dir
-::P::AUSE
-::GOTO menu
-::TASKKILL /F /IM wscript.exe
-
-
-::DRIVERQUERY 
-::RunDll32.exe Inetcpl.cpl, ClearMyTracksByProcess 16
-:: PERFMON
-::powercfg /?
-::TREE /?
-::D::IR /?
-::NETSTAT /?
