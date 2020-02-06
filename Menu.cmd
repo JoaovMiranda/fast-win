@@ -1,41 +1,53 @@
 :: Nome   : Menu.cmd
-:: Motivo : Agilizar pequenas ações diárias.
+:: Motivo : Agilizar pequenas ações e funcionalidades.
 :: Autor  : github.com/joaovMiranda
-:: VERSÃO : 1.4.4
+:: VERSÃO : 1.4.5
+
+
+:: Desativando residuos ECHO
 @ECHO off
 
-::ECHO MSGBOX "PARA TOTAL FUNCIONALIDADE EH ACONSELHADO EXECUTAR O ARQUIVO COMO ADMINISTRADOR",256,"MENU AGIL" >%temp%\mensagem1.vbs
-::START %temp%\mensagem1.vbs
+:: Traduzindo para UTF-8
+CHCP 65001 > nul
+
+ECHO MSGBOX "PARA TOTAL FUNCIONALIDADE É ACONSELHADO EXECUTAR O ARQUIVO COMO ADMINISTRADOR",256,"MENU AGIL" >%temp%\mensagem1.vbs
+START %temp%\mensagem1.vbs
 
 :: Autenticação
 CLS
-:: TITLE CONTROLE DE ACESSO
-:: COLOR b
-:: :control
-:: echo enter password to activate programme
-:: SET/p "pass=>"
-:: IF NOT %pass%== admin GOTO fail
+TITLE CONTROLE DE ACESSO
+COLOR b
+:control
+ECHO  ==========================================
+ECHO *   INSIRA A SENHA PARA ATIVAR O PROGRAMA  *
+ECHO  ------------------------------------------
+ECHO *  - Para mais Informacões, acesse a       * 
+ECHO *    documentação do repositorio GIT raíz  *
+ECHO  ==========================================
+SET /P "pass=>" Senha: 
+IF NOT %pass%== admin GOTO fail
 
 :wellcome
 CLS
 TITLE BEM VINDO
-CHCP 65001 > nul
 ECHO  				 ==================================
 ECHO 				*            BEM VINDO             *
 ECHO 				*                                  * 
 ECHO 				* Guia:                            *
-ECHO 				* - Para total funcionalidade éh   *
+ECHO 				* - Para total funcionalidade é    *
 ECHO 				*   necessario que o programa seja * 
 ECHO 				*   executado como administrador.  *
 ECHO 				* - Digite um numero natural(N*)   * 
 ECHO 				*   para selecionar uma das opcoes.* 
 ECHO 				* - Aperte as teclas Ctrl + C para * 
-ECHO 				*   para abortar uma operacao.     *
+ECHO 				*   para abortar uma operacão.     *
+ECHO 				* - Aperte a tecla Enter para      *
+ECHO 				*   continuar as operações         *
 ECHO  				+ ================================ + 
 ECHO 				*                                  * 
 ECHO 				*       MADE BY: Joao Miranda      * 
 ECHO 				*      github.com/joaovMiranda     * 
-ECHO 				*                                  * 
+ECHO 				*  Copyright (c) 2020 João Miranda * 
 ECHO  				 ==================================
 PAUSE > nul
 
@@ -48,12 +60,7 @@ PAUSE > nul
 	ECHO    USUARIO: %username% 
 	ECHO    COMPUTADOR: %computername% 
 	ECHO    DATA: %date%   %time%
-
-	ECHO %time:~0,2%
-	ECHO %time:~3,2%
-	ECHO %time:~6,2%.
-
-	ECHO    Copyright (c) 2020 João Miranda                                                                   
+	ECHO:                                                                      
 																
 																																		
 	ECHO          ----- MENU TAREFAS -----
@@ -67,9 +74,9 @@ PAUSE > nul
 	ECHO    * 7.  Reiniciar o Computador       *
 	ECHO    * 8.  Desligar o Computador        *
 	ECHO     ==================================
-	ECHO    * 10. GitHub                       *
-	ECHO    * 20. Voltar ao Guia               *
-	ECHO    * 50. Sair                         *
+	ECHO    * 9. GitHub                        *
+	ECHO    * 10. Voltar ao Guia               *
+	ECHO    * 11. Sair                         *
 	ECHO     ==================================
 
 :: Estrutura de Afirmações Para Menu
@@ -83,12 +90,13 @@ PAUSE > nul
 	IF %opcao% EQU 6 GOTO EXE
 	IF %opcao% EQU 7 GOTO REINICIAR
 	IF %opcao% EQU 7 GOTO DESLIGAR
-	IF %opcao% EQU 20 GOTO wellcome
-	IF %opcao% EQU 10 GOTO github
-	IF %opcao% EQU 50 GOTO EXIT
+	IF %opcao% EQU 9 GOTO github
+	IF %opcao% EQU 10 GOTO wellcome
+	IF %opcao% EQU 11 GOTO EXIT
 
 :: Se menor que 1 ou igual maior que X : Opção inválida
 	IF %opcao% LSS 1 GOTO ERROR
+	IF %opcao% GTR 11 GOTO ERROR
 
 
 :: Informações sobre a máquina
@@ -116,8 +124,11 @@ PAUSE > nul
 	PAUSE
 	GOTO menu
 
+::Serviçoes de limpeza
 :LIMP
 	CLS
+	ECHO MSGBOX "POR SEGURANÇA É ACONSELHADO CRIAR UM BACK UP ANTES DE PROSSEGUIR",256,"MENU AGIL" >%temp%\mensagem2.vbs
+	START %temp%\mensagem2.vbs
 	TITLE LIMPEZA
 	ECHO        ---- MENU DE LIMPEZA ----
 	ECHO     ===============================
@@ -201,10 +212,10 @@ PAUSE > nul
 		PAUSE
 		CLS
 		:limp3Cont
-			ECHO      ---- DESEJA ACAO PARA OUTROS USERS ? ----
+			ECHO      ---- DESEJA AÇÃO PARA OUTROS USERS ? ----
 			ECHO          ===============================
 			ECHO         *           1. SIM              *
-			ECHO         *           0. NAO              *
+			ECHO         *           0. NÃO              *
 			ECHO          ===============================
 			SET /p Userop= Escolha uma opcao: 
 			IF %Userop% EQU 0 GOTO :limpC
