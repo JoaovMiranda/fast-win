@@ -11,6 +11,7 @@
 
 ## Guia :clipboard:  
 #### 1) Informacoes da Maquina  
+
  * Inicia os comandos:  
  
 ```bat
@@ -236,13 +237,43 @@ ECHO MSGBOX "PARA TOTAL FUNCIONALIDADE EH ACONSELHADO EXECUTAR O ARQUIVO COMO AD
 START %temp%\mensagem1.vbs
 ```
 > Basta adcionar o '::' no inicio dos comandos. :mute:  
+
+### Teste funcional
+- [x] 1) TESTADO [Funcional];  
+- [x] 2) TESTADO [Funcional];  
+	- [x] 2.1) TESTADO [Funcional]; 
+	- [x] 2.2) TESTADO [Funcional];  
+	- [x] 2.3) TESTADO [Funcional];  
+	- [x] 2.4) TESTADO [Funcional];  
+- [x] 3) EM TESTE [undefined];  
+- [x] 4) TESTADO [Funcional];  
+	- [x] 4.2) TESTADO [Funcional];  
+	- [x] 4.2) TESTADO [Funcional];  
+- [x] 5) TESTADO [Funcional];  
+	- [x] 5.1) TESTADO [Funcional];  
+	- [x] 5.2) TESTADO [Funcional];  
+	- [x] 5.3) TESTADO [Funcional];  
+- [x] 6) TESTADO [Funcional];
+	- [x] 6.1) TESTADO [Funcional];  
+	- [x] 6.2) TESTADO [Funcional];  
+	- [x] 6.3) TESTADO [Funcional];  
+	- [x] 6.4) TESTADO [Funcional];  
+	- [x] 6.5) TESTADO [Funcional];  
+	- [x] 6.6) TESTADO [Funcional];  
+- [x] 8) TESTADO [Funcional];  
+- [x] 9) TESTADO [Funcional];  
  
-### Compatibilidade :computer:
-- [x] Funcional em win 7;  
-
-### Créditos
-
--  Feito por **João Miranda** :shipit:
+### Compatibilidade :computer:  
+  
+- [x] Funcional em  Microsoft Windows 10 Home Single Language;  
+  
+### Créditos  
+  
+-  Feito por **João Miranda** :shipit:  
+	-  [E-mail](joaovmirandas@gmail.com) :e-mail:  
+	-  [WhatsApp](https://api.whatsapp.com/send?phone=5581997068692&text=) :telephone_receiver:  
 -  Guiado pela [documentação oficial da Microsoft](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands) :link:  
+	-  [Em português](https://docs.microsoft.com/pt-br/windows-server/administration/windows-commands/windows-commands) :link:  
+
 
 
