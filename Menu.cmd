@@ -10,6 +10,7 @@
 :: Traduzindo para UTF-8
 CHCP 65001 > nul
 
+::Mensagem Inicial
 ECHO MSGBOX "PARA TOTAL FUNCIONALIDADE É ACONSELHADO EXECUTAR O ARQUIVO COMO ADMINISTRADOR",256,"MENU AGIL" >%temp%\mensagem1.vbs
 START %temp%\mensagem1.vbs
 
@@ -18,13 +19,14 @@ CLS
 TITLE CONTROLE DE ACESSO
 COLOR b
 :control
+CLS
 ECHO  ==========================================
 ECHO *   INSIRA A SENHA PARA ATIVAR O PROGRAMA  *
 ECHO  ------------------------------------------
 ECHO *  - Para mais Informacões, acesse a       * 
 ECHO *    documentação do repositorio GIT raíz  *
 ECHO  ==========================================
-SET /P "pass=>" Senha: 
+SET /P "pass=Senha>"  
 IF NOT %pass%== admin GOTO fail
 
 :wellcome
@@ -46,8 +48,8 @@ ECHO 				*   continuar as operações         *
 ECHO  				+ ================================ + 
 ECHO 				*                                  * 
 ECHO 				*       MADE BY: Joao Miranda      * 
-ECHO 				*      github.com/joaovMiranda     * 
 ECHO 				*  Copyright (c) 2020 João Miranda * 
+ECHO 				*                                  * 
 ECHO  				 ==================================
 PAUSE > nul
 
@@ -80,7 +82,7 @@ PAUSE > nul
 	ECHO     ==================================
 
 :: Estrutura de Afirmações Para Menu
-	SET /p opcao= Escolha uma opcao: 
+	SET /p opcao= Escolha uma opção: 
 	ECHO ------------------------------
 	IF %opcao% EQU 1 GOTO INFO
 	IF %opcao% EQU 2 GOTO LIMP
@@ -89,12 +91,12 @@ PAUSE > nul
 	IF %opcao% EQU 5 GOTO REDE
 	IF %opcao% EQU 6 GOTO EXE
 	IF %opcao% EQU 7 GOTO REINICIAR
-	IF %opcao% EQU 7 GOTO DESLIGAR
+	IF %opcao% EQU 8 GOTO DESLIGAR
 	IF %opcao% EQU 9 GOTO github
 	IF %opcao% EQU 10 GOTO wellcome
 	IF %opcao% EQU 11 GOTO EXIT
 
-:: Se menor que 1 ou igual maior que X : Opção inválida
+:: Se menor que 1 ou maior que 11 = Opção inválida
 	IF %opcao% LSS 1 GOTO ERROR
 	IF %opcao% GTR 11 GOTO ERROR
 
@@ -105,7 +107,7 @@ PAUSE > nul
 	TITLE INFORMACOES
 	COLOR c
 	ECHO 				 ==================================
-	ECHO 				*           SUA PLACA MAE          *
+	ECHO 				*           SUA PLACA MÃE          *
 	ECHO 				 ==================================
 	WMIC baseboard get product, manufacturer, version, serialnumber
 	ECHO 				 ==================================
@@ -127,7 +129,7 @@ PAUSE > nul
 ::Serviçoes de limpeza
 :LIMP
 	CLS
-	ECHO MSGBOX "POR SEGURANÇA É ACONSELHADO CRIAR UM BACK UP ANTES DE PROSSEGUIR",256,"MENU AGIL" >%temp%\mensagem2.vbs
+	ECHO MSGBOX "POR SEGURANCA EH ACONSELHADO CRIAR UM BACK UP ANTES DE PROSSEGUIR",256,"MENU AGIL" >%temp%\mensagem2.vbs
 	START %temp%\mensagem2.vbs
 	TITLE LIMPEZA
 	ECHO        ---- MENU DE LIMPEZA ----
@@ -157,7 +159,7 @@ PAUSE > nul
 		ECHO  ==================================
 		ECHO *        Lixeira Esvaziada         *
 		ECHO  ==================================
-		PAUSE>nul
+		PAUSE > nul
 		GOTO menu
 
 :: Apagando arquivos desnecessarios
@@ -169,15 +171,6 @@ PAUSE > nul
 		DEL C:\Windows\System32\LOAD.*.*   /q
 		DEL C:\Windows\System32\GIF.*.* /q
 		DEL c:\windows\spool\printers   /q
-		DEL /s C:\windows\temp\*.* /q 
-		DEL /F /S /Q C:\WINDOWS\Temp\*.*
-		DEL "%WINDIR%\Temp\*.*" /F /S /Q
-		RD /S /Q "%HOMEPATH%\Config~1\Temp"
-		MD "%HOMEPATH%\Config~1\Temp"
-		RD /S /Q C:\WINDOWS\Temp\
-		MD C:\WINDOWS\Temp
-		DEL /F /S /Q %HOMEPATH%\Config~1\Temp\*.*
-		DEL %temp% /q
 		RD /S /Q C:\RECYCLER\ 
 		DEL /s   C:\windows\system32\dllcache   /q
 		DEL /s   C:\MSOCache\*.*   /q
@@ -188,7 +181,7 @@ PAUSE > nul
 		ECHO  ==================================
 		ECHO *        Limpeza Concluida         *
 		ECHO  ==================================
-		PAUSE
+		PAUSE > nul
 		GOTO menu
 
 :: Limpar Arquivos Temporarios
@@ -197,62 +190,62 @@ PAUSE > nul
 		CLS
 		IF EXIST c:\windows\temp\ DEL /f /s /q c:\windows\temp\
 		DEL /f /s /q %temp%\
-		IF EXIST “C:\Documents and Settings\” (
-			FOR /D %%x in (“C:\Documents and Settings\*”) do (
-				RMDIR /s /q “%%x\Local Settings\Temporary Internet Files”
-				mkdir “%%x\Local Settings\Temporary Internet Files”
-			)
-		)
-		IF EXIST “C:\Documents and Settings\” (
-			FOR /D %%x in (“C:\Documents and Settings\*”) do (
-				RMDIR /s /q “%%x\Local Settings\Temp”
-				MKDIR “%%x\Local Settings\Temp”
-			)
-		)
-		PAUSE
+		DEL /s C:\windows\temp\*.* /q 
+		DEL /F /S /Q C:\WINDOWS\Temp\*.*
+		DEL "%WINDIR%\Temp\*.*" /F /S /Q
+		RD /S /Q "%HOMEPATH%\Config~1\Temp"
+		MD "%HOMEPATH%\Config~1\Temp"
+		RD /S /Q C:\WINDOWS\Temp\
+		MD C:\WINDOWS\Temp
+		DEL /F /S /Q %HOMEPATH%\Config~1\Temp\*.*
+		DEL %temp% /q
+		ECHO  ==================================
+		ECHO *         Ação Concluída           *
+		ECHO  ==================================
+		PAUSE > nul
 		CLS
-		:limp3Cont
-			ECHO      ---- DESEJA AÇÃO PARA OUTROS USERS ? ----
-			ECHO          ===============================
-			ECHO         *           1. SIM              *
-			ECHO         *           0. NÃO              *
-			ECHO          ===============================
-			SET /p Userop= Escolha uma opcao: 
-			IF %Userop% EQU 0 GOTO :limpC
-			IF %Userop% EQU 1 GOTO :limp3U
-			IF %Userop% GTR 1 GOTO :limp3F
-			IF %Userop% LSS 0 GOTO :limp3F
-			:limp3U
-				CLS
-				IF EXIST “C:\Users\” (
-					FOR /D %%x in (“C:\Users\*”) do (
-						RMDIR /s /q “%%x\AppData\Local\Temp”
-						MKDIR “%%x\AppData\Local\Temp”
-					)
-				)
-				IF EXIST “C:\Users\” (
-					FOR /D %%x in (“C:\Users\*”) do (
-						RMDIR /s /q “%%x\AppData\Local\Microsoft\Windows\Temporary Internet Files”
-						MKDIR “%%x\AppData\Local\Microsoft\Windows\Temporary Internet Files”
-					)
-				)
-			PAUSE
-			CLS	
-		GOTO :limpC
-		
-		:limpC
-		ECHO  ==================================
-		ECHO *        Limpeza Concluida         *
-		ECHO  ==================================
-		PAUSE
+::		:limp3Cont
+::			ECHO      ---- DESEJA AÇÃO PARA OUTROS USERS ? ----
+::			ECHO          ===============================
+::			ECHO         *           1. SIM              *
+::			ECHO         *           0. NÃO              *
+::			ECHO          ===============================
+::			SET /p Userop= Escolha uma opção: 
+::			IF %Userop% EQU 0 GOTO :limpC
+::			IF %Userop% EQU 1 GOTO :limp3U
+::			IF %Userop% GTR 1 GOTO :limp3F
+::			IF %Userop% LSS 0 GOTO :limp3F
+::			:limp3U
+::				CLS
+::				IF EXIST “C:\Users\” (
+::					FOR /D %%x in (“C:\Users\*”) do (
+::						RMDIR /s /q “%%x\AppData\Local\Temp”
+::						MKDIR “%%x\AppData\Local\Temp”
+::					)
+::				)
+::				IF EXIST “C:\Users\” (
+::					FOR /D %%x in (“C:\Users\*”) do (
+::						RMDIR /s /q “%%x\AppData\Local\Microsoft\Windows\Temporary Internet Files”
+::						MKDIR “%%x\AppData\Local\Microsoft\Windows\Temporary Internet Files”
+::					)
+::				)
+::			PAUSE
+::			CLS	
+::		GOTO :limpC
+::		
+::		:limpC
+::		ECHO  ==================================
+::		ECHO *        Limpeza Concluida         *
+::		ECHO  ==================================
+::		PAUSE
 		GOTO menu
-
-		:limp3F
-		ECHO  ==================================
-		ECHO *        Opção Errada              *
-		ECHO  ==================================
-		PAUSE
-		GOTO :limp3Cont
+::
+::		:limp3F
+::		ECHO  ==================================
+::		ECHO *        Opção Errada              *
+::		ECHO  ==================================
+::		PAUSE > nul
+::		GOTO :limp3Cont
 
 :: Limpar fila de impressão 	
 	:limp4
@@ -266,7 +259,7 @@ PAUSE > nul
 		ECHO  =======================================
 		ECHO +          Processo Finalizado          +
 		ECHO  =======================================
-		PAUSE
+		PAUSE > nul
 		GOTO menu
 
 	:limp5
@@ -276,9 +269,9 @@ PAUSE > nul
 	:limp6
 		CLS
 		ECHO 	=======================================
-		ECHO  * Opcao Invalida! Escolha outra opcao.    *
+		ECHO  * Opção Invalida! Escolha outra opção.    *
 		ECHO 	=======================================
-		PAUSE
+		PAUSE > nul
 		GOTO LIMP
 
 :: Opções de Disco
@@ -293,7 +286,7 @@ PAUSE > nul
 	ECHO    * 3. Checar Saude do Disco      *
 	ECHO    * 4. Voltar                     *
 	ECHO     ===============================
-	SET /p disc= Selecione:
+	SET /p disc= Selecione: 
 
 	IF %disc% EQU 1 GOTO disc1
 	IF %disc% EQU 2 GOTO disc2
@@ -329,7 +322,7 @@ PAUSE > nul
 				GOTO menu
 			:oppp3
 				ECHO  ============================================
-				ECHO * Opcao Invalida! Escolha outra opcao. (1/0) *
+				ECHO * Opcao Invalida! Escolha outra opção. (1/0) *
 				ECHO  ============================================
 				PAUSE
 				GOTO disc1 
@@ -349,7 +342,7 @@ PAUSE > nul
 		ECHO  				*       Escaneamento de Disco       *
 		ECHO   				 ==================================
 		chkdsk c:
-		PAUSE
+		PAUSE 
 		GOTO menu
 
 	:disc4
@@ -359,9 +352,9 @@ PAUSE > nul
 	:disc5
 		CLS
 		ECHO 	=======================================
-		ECHO  * Opcao Invalida! Escolha outra opcao.    *
+		ECHO  * Opcao Invalida! Escolha outra opção.    *
 		ECHO 	=======================================
-		PAUSE
+		PAUSE > nul
 		GOTO DISCO
 
 :: Tipos de BackUP
@@ -374,7 +367,7 @@ PAUSE > nul
 	ECHO    * 2.  Limpar Area de Trabalho      *
 	ECHO    * 3.  Voltar                       *
 	ECHO     ==================================
-	SET /p bac= Selecione :
+	SET /p bac= Selecione: 
 
 	IF %bac% EQU 1 GOTO bac1
 	IF %bac% EQU 2 GOTO bac2
@@ -390,7 +383,11 @@ PAUSE > nul
 		ECHO  				 ==================================
 		ECHO  				*      Operacao em Andamento      *
 		ECHO  				 ==================================
-		XCOPY /T /E /-Y /C  %userprofile%\Documents\*.*  C:\BackupDocuments
+		IF EXIST C:\BackupDocuments (
+		XCOPY /E /-Y /C  %userprofile%\Documents\*.*  C:\BackupDocuments
+		) ELSE (
+			MD   C:\BackupDocuments & CLS & GOTO bac1
+		)
 		ECHO  				 ==================================
 		ECHO  				*         Backup Concluido         *
 		ECHO  				 ==================================
@@ -424,7 +421,7 @@ PAUSE > nul
 
 	:bac6
 		ECHO 	=======================================
-		ECHO   * Opcao Invalida! Escolha outra opcao.    *
+		ECHO   * Opcao Invalida! Escolha outra opção.    *
 		ECHO 	=======================================
 		PAUSE
 		GOTO EXE
@@ -435,22 +432,24 @@ PAUSE > nul
 	TITLE EXECUTAVEIS
 	ECHO         ---- ABRIR EXECUTAVEIS ----
 	ECHO      =================================
-	ECHO    * 1.  Abrir Calculadora            *
-	ECHO    * 2.  Abrir Painel de Controle     *
-	ECHO    * 3.  Abrir Ger. Tarefas           *
+	ECHO    * 1.  Calculadora                  *
+	ECHO    * 2.  Painel de Controle           *
+	ECHO    * 3.  Gerenciador de Tarefas       *
 	ECHO    * 4.  Desinstalar Programas        *
-	ECHO    * 5.  Voltar                       *
+	ECHO    * 5.  Direct X                     *
+	ECHO    * 6.  Voltar                       *
 	ECHO      =================================
-	SET /p exec= Selecione :
+	SET /p exec= Selecione: 
 
 	IF %exec% EQU 1 GOTO exec1
 	IF %exec% EQU 2 GOTO exec2
 	IF %exec% EQU 3 GOTO exec3
 	IF %exec% EQU 4 GOTO exec4
 	IF %exec% EQU 5 GOTO exec5
+	IF %exec% EQU 6 GOTO exec6
 
-	IF %exec% GTR 5 GOTO exec6
-	IF %exec% LSS 1 GOTO exec6
+	IF %exec% GTR 6 GOTO exec7
+	IF %exec% LSS 1 GOTO exec7
 
 	:exec1
 		CLS
@@ -474,11 +473,16 @@ PAUSE > nul
 
 	:exec5
 		CLS
+		START dxdiag
 		GOTO menu
 
 	:exec6
+		CLS
+		GOTO menu
+
+	:exec7
 		ECHO 	=======================================
-		ECHO   * Opcao Invalida! Escolha outra opcao.   *
+		ECHO   * Opcao Invalida! Escolha outra opção.   *
 		ECHO 	=======================================
 		PAUSE
 		GOTO EXE
@@ -493,7 +497,7 @@ PAUSE > nul
 	ECHO *   3. Informacoes da rede     *
 	ECHO *   4. Voltar                  *
 	ECHO  ==============================
-	SET /p red= Selecione :
+	SET /p red= Selecione: 
 	IF %red% EQU 1 GOTO oppp1
 	IF %red% EQU 2 GOTO oppp2
 	IF %red% EQU 3 GOTO oppp3
@@ -529,7 +533,7 @@ PAUSE > nul
 		TITLE TRABALHANDO ...
 		IPCONFIG /flushdns
 		ECHO  =======================================
-		netsh winsock reset
+		::netsh winsock reset
 		ECHO  =======================================
 		NBTSTAT -R
 		ECHO  =======================================
@@ -541,7 +545,7 @@ PAUSE > nul
 		CLS
 		TITLE INFORMACOES DA REDE
 		ECHO                    ===================
-		ECHO                   * Dados de conexao  * 
+		ECHO                   *  Dados de conexão  * 
 		ECHO                    ===================
 		IPCONFIG  /ALL
 		PAUSE
@@ -553,7 +557,7 @@ PAUSE > nul
 
 	:oppp5
 		ECHO 	=======================================
-		ECHO   * Opcao Invalida! Escolha outra opcao.  *
+		ECHO   * Opção Inválida! Escolha outra opção.  *
 		ECHO 	=======================================
 		PAUSE
 		GOTO REDE
@@ -563,10 +567,12 @@ PAUSE > nul
 	COLOR 2
 	:: Estrutura de Afirmação para Checar a Escolha do Usuario
 	TITLE REINICIAR
-	ECHO  ------------------------------
-	ECHO *  1. = Yes                    *
-	ECHO *  0. = No                     *
-	ECHO  ------------------------------
+	ECHO  ====================================
+	ECHO * VOCE TEM CERTEZA? JA SALVOU TUDO?  *
+	ECHO  ------------------------------------
+	ECHO *             1. = SIM               *
+	ECHO *             0. = NÃO               *
+	ECHO  ===================================
 	SET /p rein= Tem Certeza ?:
 	IF %rein% EQU 1 GOTO op1
 	IF %rein% GTR 1 GOTO op3
@@ -578,7 +584,7 @@ PAUSE > nul
 			GOTO menu
 		:op3
 			ECHO 	=======================================
-			ECHO * Opcao Invalida! Escolha outra opcao. (1/0) *
+			ECHO * Opcao Invalida! Escolha outra opção. (1/0) *
 			ECHO 	=======================================
 			PAUSE
 			GOTO opcao15
@@ -587,11 +593,13 @@ PAUSE > nul
 	CLS
 	COLOR 2
 	TITLE DESLIGAR
-	ECHO  ------------------------------
-	ECHO *  1. = Yes                    *
-	ECHO *  0. = No                     *
-	ECHO  ------------------------------
-	SET /p shut= Tem Certeza ?:
+	ECHO  ====================================
+	ECHO   VOCE TEM CERTEZA? JA SALVOU TUDO?
+	ECHO  ------------------------------------
+	ECHO *             1. = SIM               *
+	ECHO *             0. = NÃO               *
+	ECHO  ===================================
+	SET /p shut= Tem Certeza? 
 	IF %shut% EQU 1 GOTO opp1
 	IF %shut% GTR 1 GOTO opp3
 	IF %shut% EQU 0 GOTO opp2
@@ -602,7 +610,7 @@ PAUSE > nul
 			GOTO menu
 		:opp3
 			ECHO 	=======================================
-			ECHO * Opcao Invalida! Escolha outra opcao. (1/0) *
+			ECHO * Opcao Invalida! Escolha outra opção. (1/0) *
 			ECHO 	=======================================
 			PAUSE
 			GOTO opcao16
@@ -613,14 +621,16 @@ PAUSE > nul
 
 :ERROR
 	ECHO  ======================================
-	ECHO * Opcao Invalida! Escolha outra opcao. *
+	ECHO * Opcao Invalida! Escolha outra opção. *
 	ECHO  ======================================
-	PAUSE
+	PAUSE > nul
 	GOTO menu
 
 :fail
-	ECHO Senha incorreta, tente novamente.
-	PAUSE
+	ECHO  ======================================
+	ECHO  X Senha incorreta, tente novamente.  X
+	ECHO  ======================================
+	PAUSE > nul
 	GOTO control
 
 :github
