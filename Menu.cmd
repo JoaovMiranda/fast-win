@@ -188,17 +188,19 @@ PAUSE > nul
 	:limp3
 		TITLE LIMPANDO ARQUIVOS TEMP...
 		CLS
-		IF EXIST c:\windows\temp\ DEL /f /s /q c:\windows\temp\
-		DEL /f /s /q %temp%\
-		DEL /s C:\windows\temp\*.* /q 
-		DEL /F /S /Q C:\WINDOWS\Temp\*.*
-		DEL "%WINDIR%\Temp\*.*" /F /S /Q
-		RD /S /Q "%HOMEPATH%\Config~1\Temp"
-		MD "%HOMEPATH%\Config~1\Temp"
-		RD /S /Q C:\WINDOWS\Temp\
-		MD C:\WINDOWS\Temp
-		DEL /F /S /Q %HOMEPATH%\Config~1\Temp\*.*
-		DEL %temp% /q
+		IF EXIST c:\windows\temp\ ( 
+			DEL /f /s /q c:\windows\temp\
+			DEL /f /s /q %temp%\
+			DEL /s C:\windows\temp\*.* /q 
+			DEL /F /S /Q C:\WINDOWS\Temp\*.*
+			DEL "%WINDIR%\Temp\*.*" /F /S /Q
+			RD /S /Q "%HOMEPATH%\Config~1\Temp"
+			MD "%HOMEPATH%\Config~1\Temp"
+			RD /S /Q C:\WINDOWS\Temp\
+			MD C:\WINDOWS\Temp
+			DEL /F /S /Q %HOMEPATH%\Config~1\Temp\*.*
+			DEL %temp% /q 
+		)
 		ECHO  ==================================
 		ECHO *         Ação Concluída           *
 		ECHO  ==================================
