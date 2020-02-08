@@ -1,12 +1,11 @@
 # Menu Agil  
-## Criado a partir do estudo de programação em lotes.  
 
+FastWin é um *script* de atividades feito em comandos que serão executados sequencialmente pelo interpretador de comandos do Windows.  
 
-
- * Menu em BatchFile   para computadores lentos e de baixa qualidade, auxilia pessoas leigas sobre funcionalidades e na inicialização de comandos primarios;  
-
- * O menu divide-se em uma estrutura de arvore, isto é, Menu de tarefas se divide em outros submenus onde cada um deles oferece opções a serem seguidas;  
-
+## Sobre  
+ * Auxilia pessoas leigas sobre funcionalidades e na inicialização de comandos primarios.  
+ * Útil para agilizar atividades diárias simples como limpeza e Backup.  
+ * O menu divide-se em uma estrutura de arvore, isto é, Menu de tarefas se divide em outros submenus onde cada um deles oferece opções a serem seguidas.  
  * A senha de acesso padrão é 'admin'. :key:  
 
 ## Guia :clipboard:  
@@ -49,19 +48,11 @@ E o parâmetro 'Q' vem de **Q**uiet. Não solicita confirmação ao excluir uma 
 
 **2. Limpeza Interna**  
 ```bat
+TASKKILL /F /IM wscript.exe
 DEL C:\Windows\System32\CLINT.*.*  /q
 DEL C:\Windows\System32\LOAD.*.*   /q
 DEL C:\Windows\System32\GIF.*.* /q
 DEL c:\windows\spool\printers   /q
-DEL /s C:\windows\temp\*.* /q 
-DEL /F /S /Q C:\WINDOWS\Temp\*.*
-DEL "%WINDIR%\Temp\*.*" /F /S /Q
-RD /S /Q "%HOMEPATH%\Config~1\Temp"
-MD "%HOMEPATH%\Config~1\Temp"
-RD /S /Q C:\WINDOWS\Temp\
-MD C:\WINDOWS\Temp
-DEL /F /S /Q %HOMEPATH%\Config~1\Temp\*.*
-DEL %temp% /q
 RD /S /Q C:\RECYCLER\ 
 DEL /s   C:\windows\system32\dllcache   /q
 DEL /s   C:\MSOCache\*.*   /q
@@ -82,24 +73,21 @@ Deleta o 'dmwappushservice'. Um keylogger que coleta informações sobre a utili
 * Antes de inicar o processo é válidado para **se** existir os respectivos diretórios.  
 
 ```bat
-IF EXIST c:\windows\temp\ (
-			FORFILES /P C:\Windows\Temp /S /M *.* /D -7 /C “cmd /C DEL /Q @path”
-		)
-		IF EXIST C:\Users\ (
-			FOR /D %%x in (“C:\Users\*”) do (
-				FORFILES /P %%x\AppData\Local\Temp /S /M *.* /D -7 /C “cmd /C DEL /Q @path”
-				FORFILES /P %%x\AppData\Local\Microsoft\Windows\Temporary Internet Files /S /M *.* /D -7 /C “cmd /C DEL /Q @path”
-				FORFILES /P %%x\AppData\Local\Microsoft\Windows\WER\ReportQueue /S /M *.* /C “cmd /C DEL /Q @path”
-			)
+IF EXIST c:\windows\temp\ ( 
+			DEL /f /s /q c:\windows\temp\
+			DEL /f /s /q %temp%\
+			DEL /s C:\windows\temp\*.* /q 
+			DEL /F /S /Q C:\WINDOWS\Temp\*.*
+			DEL "%WINDIR%\Temp\*.*" /F /S /Q
+			RD /S /Q "%HOMEPATH%\Config~1\Temp"
+			MD "%HOMEPATH%\Config~1\Temp"
+			RD /S /Q C:\WINDOWS\Temp\
+			MD C:\WINDOWS\Temp
+			DEL /F /S /Q %HOMEPATH%\Config~1\Temp\*.*
+			DEL %temp% /q 
 		)
  ```
- > Inicia o comando ForFiles que seleciona e executa um comando em um conjunto de arquivos;  
- Onde o parâmetro 'P' vem de **P**athName. Indica o caminho para se iniciar a pesquisa;  
- O parâmetro 'S' vem de **S**ubDirectory. Instrui a incluir subpastas;  
- O parâmetro 'M' vem de Search**M**ask. Pesquisa arquivos de acordo com uma máscara de pesquisa;  
- O parâmetro 'C' vem de **C**ommand. Indica o comando a ser executado para cada arquivo;  
- O parâmetro 'D' vem de **D**ata. Seleciona os arquivos com uma data da última modificação;  
- E o parâmetro 'Q' vem de **Q**uiet. Não solicita confirmação ao excluir.  
+ > O comando **DEL** deleta os arquivos;   
  
  **4. Limpar fila de impressão**  
  ```bat
@@ -238,7 +226,7 @@ START %temp%\mensagem1.vbs
 ```
 > Basta adcionar o '::' no inicio dos comandos. :mute:  
 
-### Teste funcional
+### Teste funcional  
 - [x] 1) TESTADO [Funcional];  
 - [x] 2) TESTADO [Funcional];  
 	- [x] 2.1) TESTADO [Funcional]; 
@@ -272,7 +260,9 @@ START %temp%\mensagem1.vbs
 -  Feito por **João Miranda** :shipit:  
 	-  [E-mail](joaovmirandas@gmail.com) :e-mail:  
 	-  [WhatsApp](https://api.whatsapp.com/send?phone=5581997068692&text=) :telephone_receiver:  
--  Guiado pela [documentação oficial da Microsoft](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands) :link:  
+	
+### Documentação  
+- [Documentação oficial da Microsoft](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands) :link:  
 	-  [Em português](https://docs.microsoft.com/pt-br/windows-server/administration/windows-commands/windows-commands) :link:  
 
 
