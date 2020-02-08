@@ -11,7 +11,7 @@
 CHCP 65001 > nul
 
 ::Mensagem Inicial
-ECHO MSGBOX "PARA TOTAL FUNCIONALIDADE É ACONSELHADO EXECUTAR O ARQUIVO COMO ADMINISTRADOR",256,"MENU AGIL" >%temp%\mensagem1.vbs
+ECHO MSGBOX "PARA TOTAL FUNCIONALIDADE ACONSELHAMOS EXECUTAR O ARQUIVO COMO ADMINISTRADOR",256,"FAST WIN" >%temp%\mensagem1.vbs
 START %temp%\mensagem1.vbs
 
 :: Autenticação
@@ -123,13 +123,13 @@ PAUSE > nul
 	ECHO   				 ==================================
 	ECHO   				 Arquivo INFO.txt gerado no disco C:
 	ECHO   				 ==================================
-	PAUSE
+	PAUSE > nul
 	GOTO menu
 
 ::Serviçoes de limpeza
 :LIMP
 	CLS
-	ECHO MSGBOX "POR SEGURANCA EH ACONSELHADO CRIAR UM BACK UP ANTES DE PROSSEGUIR",256,"MENU AGIL" >%temp%\mensagem2.vbs
+	ECHO MSGBOX "POR SEGURANCA ACONSELHAMOS CRIAR UM BACK UP ANTES DE PROSSEGUIR",256,"FAST WIN" >%temp%\mensagem2.vbs
 	START %temp%\mensagem2.vbs
 	TITLE LIMPEZA
 	ECHO        ---- MENU DE LIMPEZA ----
@@ -271,7 +271,7 @@ PAUSE > nul
 	:limp6
 		CLS
 		ECHO 	=======================================
-		ECHO  * Opção Invalida! Escolha outra opção.    *
+		ECHO  * Opção Inválida! Escolha outra opção.    *
 		ECHO 	=======================================
 		PAUSE > nul
 		GOTO LIMP
@@ -324,7 +324,7 @@ PAUSE > nul
 				GOTO menu
 			:oppp3
 				ECHO  ============================================
-				ECHO * Opcao Invalida! Escolha outra opção. (1/0) *
+				ECHO * Opção Inválida! Escolha outra opção. (1/0) *
 				ECHO  ============================================
 				PAUSE
 				GOTO disc1 
@@ -343,7 +343,7 @@ PAUSE > nul
 		ECHO  				 ==================================
 		ECHO  				*       Escaneamento de Disco       *
 		ECHO   				 ==================================
-		chkdsk c:
+		CHKDSK c: /F
 		PAUSE 
 		GOTO menu
 
@@ -354,7 +354,7 @@ PAUSE > nul
 	:disc5
 		CLS
 		ECHO 	=======================================
-		ECHO  * Opcao Invalida! Escolha outra opção.    *
+		ECHO  * Opção Inválida! Escolha outra opção.    *
 		ECHO 	=======================================
 		PAUSE > nul
 		GOTO DISCO
@@ -411,6 +411,7 @@ PAUSE > nul
 			MD BackupDesktop
 			CD %userprofile%\Desktop
 			MOVE /-Y * C:\BackupDesktop
+		)
 		ECHO   				 ==================================
 		ECHO  				*         Limpeza Concluida        *
 		ECHO   				 ==================================
@@ -423,7 +424,7 @@ PAUSE > nul
 
 	:bac6
 		ECHO 	=======================================
-		ECHO   * Opcao Invalida! Escolha outra opção.    *
+		ECHO   * Opção Inválida! Escolha outra opção.    *
 		ECHO 	=======================================
 		PAUSE
 		GOTO EXE
@@ -484,7 +485,7 @@ PAUSE > nul
 
 	:exec7
 		ECHO 	=======================================
-		ECHO   * Opcao Invalida! Escolha outra opção.   *
+		ECHO   * Opção Inválida! Escolha outra opção.   *
 		ECHO 	=======================================
 		PAUSE
 		GOTO EXE
@@ -586,7 +587,7 @@ PAUSE > nul
 			GOTO menu
 		:op3
 			ECHO 	=======================================
-			ECHO * Opcao Invalida! Escolha outra opção. (1/0) *
+			ECHO * Opção Inválida! Escolha outra opção. (1/0) *
 			ECHO 	=======================================
 			PAUSE
 			GOTO opcao15
@@ -612,7 +613,7 @@ PAUSE > nul
 			GOTO menu
 		:opp3
 			ECHO 	=======================================
-			ECHO * Opcao Invalida! Escolha outra opção. (1/0) *
+			ECHO * Opção Inválida! Escolha outra opção. (1/0) *
 			ECHO 	=======================================
 			PAUSE
 			GOTO opcao16
@@ -623,7 +624,7 @@ PAUSE > nul
 
 :ERROR
 	ECHO  ======================================
-	ECHO * Opcao Invalida! Escolha outra opção. *
+	ECHO * Opção Inválida! Escolha outra opção. *
 	ECHO  ======================================
 	PAUSE > nul
 	GOTO menu
