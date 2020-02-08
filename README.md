@@ -1,4 +1,4 @@
-# Menu Agil  
+# FAST WIN  
 
 FastWin é um *script* de atividades feito em comandos que serão executados sequencialmente pelo interpretador de comandos do Windows.  
 
@@ -294,13 +294,12 @@ START https://github.com/joaovMiranda/Menu_Agil
 
  >  Senha removida. :unlock:  
  
- - Para remover o MsgBox inicial.
+ - Para remover o MsgBox inicial basta adcionar o '::' no inicio dos comandos. :mute: 
  
  ```bat
 ECHO MSGBOX "PARA TOTAL FUNCIONALIDADE EH ACONSELHADO EXECUTAR O ARQUIVO COMO ADMINISTRADOR",256,"MENU AGIL" >%temp%\mensagem1.vbs
 START %temp%\mensagem1.vbs
 ```
-> Basta adcionar o '::' no inicio dos comandos. :mute:  
 
 ### Teste funcional  
 - [x] 1) TESTADO [Funcional];  
