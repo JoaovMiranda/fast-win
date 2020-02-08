@@ -7,6 +7,9 @@ FastWin é um *script* de atividades feito em comandos que serão executados seq
  * Útil para agilizar atividades e tarefas diárias simples como limpeza e Backup.  
  * O menu divide-se em uma estrutura de arvore, isto é, Menu de tarefas se divide em outros submenus onde cada um deles oferece opções a serem seguidas.  
  * A senha de acesso padrão é 'admin'. :key:  
+   
+ ![Config](https://github.com/JoaovMiranda/Menu_Agil/blob/master/Imgs/Open.gif)  
+
 
 ## Guia :clipboard:  
 
@@ -36,6 +39,8 @@ SYSTEMINFO > c:\INFO.txt
 > Esta ferramenta exibe informações de configuração de sistema para um computador, inclusive níveis de service pack;  
 É criado um arquivo .txt no disco C: contendo todas essas informações.  
 
+![Config](https://github.com/JoaovMiranda/Menu_Agil/blob/master/Imgs/Info-Maq.gif)  
+
 #### 2) Opções de Limpeza   
   
 **2.1. Limpar a Lixeira**  
@@ -46,6 +51,9 @@ RD /S /Q c:\$Recycle.bin
  >  Inicia o comando **R**M**D**IR (Remove directory);  
 Onde o parâmetro 'S' vem de **S**ubdirectories. Exclui uma árvore de diretórios e todos os seus subdiretórios, incluindo todos os arquivos;  
 E o parâmetro 'Q' vem de **Q**uiet. Não solicita confirmação ao excluir uma árvore de diretórios.  
+
+
+![Config](https://github.com/JoaovMiranda/Menu_Agil/blob/master/Imgs/Esvaziar-Lixeira.gif)  
 
 **2.2. Limpeza Interna**  
 ```bat
@@ -231,6 +239,8 @@ START dxdiag
 ```
 > Inicia o executável da janela para relatório do Direct X.  
 
+![Config](https://github.com/JoaovMiranda/Menu_Agil/blob/master/Imgs/Exe-exec.gif)    
+
 #### 7) Reiniciar o Computador  
 * Entra na estrutura de validação, isto é, se a opção for 'SIM':  
 
@@ -279,11 +289,9 @@ START https://github.com/joaovMiranda/Menu_Agil
  
  - Para remover a senha basta adcionar '::' no inicio dos comandos.  
  
- ```bat
-:: :control
-:: SET/p "pass=>"
-:: IF NOT %pass%== admin GOTO fail
- ```
+![Config](https://github.com/JoaovMiranda/Menu_Agil/blob/master/Imgs/Config-senha.gif)  
+
+
  >  Senha removida. :unlock:  
  
  - Para remover o MsgBox inicial.
@@ -326,7 +334,7 @@ START %temp%\mensagem1.vbs
 ### Créditos  
   
 -  Feito por **João Miranda** :shipit:  
-	-  [E-mail](joaovmirandas@gmail.com) :e-mail:  
+	-  joaovmirandas@gmail.com :e-mail:  
 	-  [WhatsApp](https://api.whatsapp.com/send?phone=5581997068692&text=) :telephone_receiver:  
 	
 ### Documentação  
